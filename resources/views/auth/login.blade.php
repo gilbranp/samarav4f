@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Login - BibakuTech</title>
+  <title>Login - Samara</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -25,8 +25,8 @@
           <form action="/login" method="POST">
               @csrf
               <div class="mb-4">
-                  <label for="email" class="block text-green-700 font-semibold mb-2">Email</label>
-                  <input type="email" id="email" name="email" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Enter your email" required>
+                  <label for="email" class="block text-green-700 font-semibold mb-2">Username</label>
+                  <input type="email" id="email" name="username" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Enter your email" required>
               </div>
               <div class="mb-4">
                   <label for="password" class="block text-green-700 font-semibold mb-2">Password</label>
