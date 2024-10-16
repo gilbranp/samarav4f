@@ -42,6 +42,10 @@
                         <label for="food_name" class="block text-lg font-semibold mb-2">Jenis Makanan</label>
                         <input type="text" id="food_name" name="food_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     </div>
+                    <div class="mb-6">
+                        <label for="food_qty" class="block text-lg font-semibold mb-2">Jumlah Makanan</label>
+                        <input type="number" id="food_qty" name="food_qty" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
 
                     <div class="mb-6">
                         <label for="expired_date" class="block text-lg font-semibold mb-2">Perkiraan Kadaluarsa</label>

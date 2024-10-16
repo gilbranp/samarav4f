@@ -69,7 +69,7 @@
                         <label for="level" class="block text-green-700 font-semibold mb-2">Anda adalah seorang</label>
                         <select id="level" name="level" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
                             <option value="">Pilih peran anda</option>
-                            <option value="Kurir">Kurir</option>
+                            {{-- <option value="Kurir">Kurir</option> --}}
                             <option value="Pendonasi">Pendonasi</option>
                             <option value="Penerima">Penerima</option>
                         </select>
