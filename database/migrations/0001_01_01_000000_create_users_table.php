@@ -13,19 +13,23 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('selfie');
-            $table->string('name');
-            $table->string('username');
-            $table->text('address');
-            $table->string('level');
-            $table->string('organitation');
-            $table->integer('phone');
-            $table->string('job');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('selfie');                          // Foto selfie pengguna
+            $table->string('name');                            // Nama lengkap pengguna
+            $table->string('username')->unique();              // Username yang unik
+            $table->text('address');                           // Alamat lengkap
+            $table->string('level');                           // Level pengguna (Pendonasi atau Penerima)
+            $table->string('organitation')->nullable();        // Nama organisasi (opsional)
+            $table->integer('phone');                          // Nomor telepon
+            $table->string('job');                             // Pekerjaan
+            $table->string('house_photo')->nullable();        // Foto rumah dari depan (opsional untuk Penerima)
+            $table->timestamp('email_verified_at')->nullable(); // Waktu verifikasi email
+            $table->string('password');                        // Password pengguna
+            $table->boolean('is_active')->default(false);      // Status aktif pengguna (default false)
+            $table->rememberToken();                           // Token untuk "remember me"
+            $table->timestamps();                              // Timestamps created_at dan updated_at
         });
+        
+        
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();

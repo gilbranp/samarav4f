@@ -10,7 +10,7 @@
     <!-- Dropdown Admin -->
     <div class="relative">
         <button id="adminDropdownButton" class="flex items-center text-gray-200 hover:text-white focus:outline-none transition duration-300">
-            <span class="mr-2">Admin</span>
+            <span class="mr-2">{{ Auth::user()->name }}</span>
             <i class="bi bi-person-circle transition-transform duration-300 transform"></i>
         </button>
         
@@ -22,7 +22,7 @@
                 <span>Profile</span>
             </a>
             <!-- Logout Item dengan Icon -->
-            <a href="#" class="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-100 transition duration-200 rounded-b-lg">
+            <a href="/logout" class="flex items-center px-4 py-3 text-gray-800 hover:bg-gray-100 transition duration-200 rounded-b-lg">
                 <i class="bi bi-box-arrow-right mr-3"></i> <!-- Icon Logout -->
                 <span>Logout</span>
             </a>

@@ -9,37 +9,49 @@
     <div class="bg-white p-4 rounded-lg shadow-lg overflow-x-auto mt-5">
         <h3 class="text-xl font-bold mb-4">Daftar Pengguna</h3>
         <table class="min-w-full bg-white border border-gray-300">
+            @if(session('success'))
+                <div class="bg-green-500 text-white p-4 rounded-lg mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <thead>
                 <tr class="bg-gray-200">
                     <th class="py-2 px-4 border">#</th>
                     <th class="py-2 px-4 border">Nama Pengguna</th>
-                    <th class="py-2 px-4 border">Email</th>
-                    <th class="py-2 px-4 border">Role</th>
+                    <th class="py-2 px-4 border">Username</th>
+                    <th class="py-2 px-4 border">Level</th>
                     <th class="py-2 px-4 border">Status</th>
                     <th class="py-2 px-4 border">Aksi</th>
                 </tr>
             </thead>
             <tbody>
+                @foreach ($users as $user)
                 <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border">1</td>
-                    <td class="py-2 px-4 border">John Doe</td>
-                    <td class="py-2 px-4 border">johndoe@gmail.com</td>
-                    <td class="py-2 px-4 border">Penerima</td>
+                    <td class="py-2 px-4 border">{{ $loop->iteration }}</td>
+                    <td class="py-2 px-4 border">{{ $user->name }}</td>
+                    <td class="py-2 px-4 border">{{ $user->username }}</td>
+                    <td class="py-2 px-4 border">{{ $user->level }}</td>
                     <td class="py-2 px-4 border">
-                        <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs lg:text-sm">Menunggu Persetujuan</span>
+                        <span class="px-3 py-1 rounded-full text-xs lg:text-sm 
+                            {{ $user->is_active ? 'bg-green-500 text-white' : 'bg-red-500 text-white' }}">
+                            {{ $user->is_active ? 'On' : 'Off' }}
+                        </span>
                     </td>
+                    
                     <td class="py-2 px-4 border flex space-x-2">
-                        <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200 text-center" onclick="openModal('approve', 1)">
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200 text-center" onclick="openModal('approve', {{ $user->id }})">
                             <i class="bi bi-check-circle"></i> ACC
                         </button>
-                        <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 text-center" onclick="openModal('reject', 1)">
+                        <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 text-center" onclick="openModal('reject', {{ $user->id }})">
                             <i class="bi bi-x-circle"></i> Tolak
                         </button>
-                        <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-center">
+                        <a href="{{ route('manageuser.show',$user->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200 text-center">
                             <i class="bi bi-eye"></i> Lihat Detail
                         </a>
                     </td>
                 </tr>
+                @endforeach
                 <!-- Tambahkan baris data lainnya di sini -->
             </tbody>
         </table>
@@ -90,13 +102,28 @@
     }
 
     function approveUser(userId) {
-        // Lakukan AJAX untuk mengupdate status menjadi ACC
-        alert(`Pengguna dengan ID ${userId} disetujui.`);
+        // Membuat form secara dinamis untuk ACC
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/users/${userId}/approve`; // Ganti dengan rute ACC yang sesuai
+        form.innerHTML = `
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        `;
+        document.body.appendChild(form);
+        form.submit();
     }
 
     function rejectUser(userId) {
-        // Lakukan AJAX untuk mengupdate status menjadi Tolak
-        alert(`Pengguna dengan ID ${userId} ditolak.`);
+        // Membuat form secara dinamis untuk menghapus pengguna
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/users/${userId}`; // Ganti dengan rute hapus pengguna yang sesuai
+        form.innerHTML = `
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="_method" value="DELETE">
+        `;
+        document.body.appendChild(form);
+        form.submit();
     }
 </script>
 
