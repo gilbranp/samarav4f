@@ -31,12 +31,18 @@
                     <span class="sidebar-content">Terima Donasi</span>
                 </a>
             </li>
+            
+            @if (Auth::user()->level === 'Administrator')
             <li class="mb-4">
                 <a href="/manageuser" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-person-circle mr-3 text-lg"></i>
                     <span class="sidebar-content">Manajemen Pengguna</span>
                 </a>
             </li>
+            @endif
+            
+                
+           
             <li class="mb-4">
                 <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-bar-chart mr-3 text-lg"></i>

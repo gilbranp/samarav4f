@@ -46,10 +46,17 @@ Route::middleware('auth')->group(function(){
         return view('backend.index');
     });
 
-    // manage user
+    Route::middleware('administrator')->group(function(){
+        // manage user
     Route::resource('/manageuser',UserController::class);
     Route::post('users/{user}/approve', [UserController::class, 'approve'])->name('users.approve');
     Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
+    
     
     Route::get('/logout',[AuthController::class,'logout']);
+});
+
+Route::get('/404',function(){
+    return view('404');
 });

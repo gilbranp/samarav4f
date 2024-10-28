@@ -52,22 +52,26 @@
             <span>{{ $user->organitation ?? 'Tidak ada' }}</span>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4 flex items-center">
             <strong>Foto Selfie:</strong>
-            @if ($user->selfie)
-                <img src="{{ asset($user->selfie) }}" alt="Selfie" class="w-32 h-32 object-cover rounded-md inline-block ml-2">
-            @else
-                <span>Tidak ada foto selfie.</span>
-            @endif
+            <div class="ml-2">
+                @if ($user->selfie)
+                    <img src="{{ asset('storage/' . $user->selfie) }}" alt="Selfie" class="w-48 h-48 object-cover rounded-md">
+                @else
+                    <span>Tidak ada foto selfie.</span>
+                @endif
+            </div>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4 flex items-center">
             <strong>Foto Rumah:</strong>
-            @if ($user->house_photo)
-                <img src="{{ asset($user->house_photo) }}" alt="Foto Rumah" class="w-32 h-32 object-cover rounded-md inline-block ml-2">
-            @else
-                <span>Tidak ada foto rumah.</span>
-            @endif
+            <div class="ml-2">
+                @if ($user->house_photo)
+                    <img src="{{ asset('storage/' . $user->house_photo) }}" alt="Foto Rumah" class="w-48 h-48 object-cover rounded-md">
+                @else
+                    <span>Tidak ada foto rumah.</span>
+                @endif
+            </div>
         </div>
 
         <div class="flex justify-end">
