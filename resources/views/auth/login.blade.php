@@ -18,7 +18,8 @@
 
   <main>
     <div class="min-h-screen flex items-center justify-center bg-green-600">
-      <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <!-- Atur lebar yang lebih besar untuk layar yang lebih luas dengan `lg:max-w-xl` -->
+      <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md lg:max-w-xl">
           <h2 class="text-3xl font-bold text-center text-green-700 mb-6">LOGIN SAMARA</h2>
   
           <!-- Alert untuk notifikasi sukses -->
@@ -65,8 +66,7 @@
               <a href="/forgot-password" class="text-yellow-500 hover:underline">Lupa password?</a>
           </div>
       </div>
-  </div>
-  
+    </div>
   </main>
 
 </body>

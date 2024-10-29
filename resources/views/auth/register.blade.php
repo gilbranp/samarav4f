@@ -25,13 +25,13 @@
 
 <body class="bg-gray-100">
     <main>
-        <div class="min-h-screen flex items-center justify-center bg-green-600">
-            <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h2 class="text-3xl font-bold text-center text-green-700 mb-6">REGISTRASI SAMARA</h2>
+        <div class="min-h-screen flex items-center justify-center bg-green-600 py-4">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md lg:max-w-2xl xl:max-w-3xl">
+                <h2 class="text-2xl font-bold text-center text-green-700 mb-4">REGISTRASI SAMARA</h2>
 
                 <!-- Alert untuk notifikasi kesalahan -->
                 @if ($errors->any())
-                    <div class="mb-4 p-4 text-red-700 bg-red-100 rounded-lg" role="alert">
+                    <div class="mb-3 p-3 text-red-700 bg-red-100 rounded-lg" role="alert">
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -44,9 +44,9 @@
                 <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data" id="registrationForm">
                     @csrf
 
-                    <div class="mb-4">
-                        <label for="level" class="block text-green-700 font-semibold mb-2">Anda adalah seorang</label>
-                        <select id="level" name="level" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required onchange="toggleHousePhotoInput()">
+                    <div class="mb-3">
+                        <label for="level" class="block text-green-700 font-semibold mb-1">Anda adalah seorang</label>
+                        <select id="level" name="level" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required onchange="toggleHousePhotoInput()">
                             <option value="">Pilih peran anda</option>
                             <option value="Pendonasi">Pendonasi</option>
                             <option value="Penerima">Penerima</option>
@@ -54,63 +54,63 @@
                     </div>
 
                     <!-- Input Foto Rumah (Hidden by default) -->
-                    <div id="housePhotoInput" class="mb-4 hidden">
-                        <label for="housePhoto" class="block text-green-700 font-semibold mb-2">Upload Foto Rumah</label>
-                        <input type="file" id="housePhoto" name="house_photo" accept="image/*" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                        <p class="text-sm text-gray-500">Unggah foto rumah dari depan.</p>
+                    <div id="housePhotoInput" class="mb-3 hidden">
+                        <label for="housePhoto" class="block text-green-700 font-semibold mb-1">Upload Foto Rumah</label>
+                        <input type="file" id="housePhoto" name="house_photo" accept="image/*" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        <p class="text-xs text-gray-500">Unggah foto rumah dari depan.</p>
                     </div>
 
                     <!-- Input File Foto Selfie -->
-                    <div class="mb-4">
-                        <label for="selfie" class="block text-green-700 font-semibold mb-2">Upload Foto Selfie</label>
-                        <input type="file" id="selfie" name="selfie" accept="image/*" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
-                        <p class="text-sm text-gray-500">Unggah foto selfie untuk keperluan identifikasi.</p>
+                    <div class="mb-3">
+                        <label for="selfie" class="block text-green-700 font-semibold mb-1">Upload Foto Selfie</label>
+                        <input type="file" id="selfie" name="selfie" accept="image/*" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
+                        <p class="text-xs text-gray-500">Unggah foto selfie untuk keperluan identifikasi.</p>
                     </div>
 
                     <!-- Input Lainnya -->
-                    <div class="mb-4">
-                        <label for="name" class="block text-green-700 font-semibold mb-2">Nama</label>
-                        <input type="text" id="name" name="name" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan nama lengkap" required>
+                    <div class="mb-3">
+                        <label for="name" class="block text-green-700 font-semibold mb-1">Nama</label>
+                        <input type="text" id="name" name="name" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan nama lengkap" required>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="username" class="block text-green-700 font-semibold mb-2">Username</label>
-                        <input type="text" id="username" name="username" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan username" required>
+                    <div class="mb-3">
+                        <label for="username" class="block text-green-700 font-semibold mb-1">Username</label>
+                        <input type="text" id="username" name="username" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan username" required>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="address" class="block text-green-700 font-semibold mb-2">Alamat</label>
-                        <textarea id="address" name="address" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" rows="3" placeholder="Masukkan alamat lengkap" required></textarea>
+                    <div class="mb-3">
+                        <label for="address" class="block text-green-700 font-semibold mb-1">Alamat</label>
+                        <textarea id="address" name="address" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" rows="2" placeholder="Masukkan alamat lengkap" required></textarea>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="organitation" class="block text-green-700 font-semibold mb-2">Organisasi (Opsional)</label>
-                        <input type="text" id="organitation" name="organitation" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan nama organisasi (Opsional)">
+                    <div class="mb-3">
+                        <label for="organitation" class="block text-green-700 font-semibold mb-1">Organisasi (Opsional)</label>
+                        <input type="text" id="organitation" name="organitation" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan nama organisasi (Opsional)">
                     </div>
 
-                    <div class="mb-4">
-                        <label for="phone" class="block text-green-700 font-semibold mb-2">Nomor Telepon</label>
-                        <input type="number" id="phone" name="phone" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan nomor telepon" required>
+                    <div class="mb-3">
+                        <label for="phone" class="block text-green-700 font-semibold mb-1">Nomor Telepon</label>
+                        <input type="number" id="phone" name="phone" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan nomor telepon" required>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="job" class="block text-green-700 font-semibold mb-2">Pekerjaan</label>
-                        <input type="text" id="job" name="job" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan pekerjaan Anda" required>
+                    <div class="mb-3">
+                        <label for="job" class="block text-green-700 font-semibold mb-1">Pekerjaan</label>
+                        <input type="text" id="job" name="job" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan pekerjaan Anda" required>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="password" class="block text-green-700 font-semibold mb-2">Password</label>
-                        <input minlength="8" type="password" id="password" name="password" class="w-full p-3 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan password" required>
+                    <div class="mb-3">
+                        <label for="password" class="block text-green-700 font-semibold mb-1">Password</label>
+                        <input minlength="8" type="password" id="password" name="password" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan password" required>
                     </div>
 
                     <!-- Tombol Registrasi -->
-                    <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg font-semibold transition duration-300 shadow-lg">
+                    <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg font-semibold transition duration-300 shadow-lg">
                         Daftar
                     </button>
                 </form>
 
                 <!-- Link Login -->
-                <div class="mt-6 text-center">
+                <div class="mt-4 text-center">
                     <a href="/login" class="text-yellow-500 hover:underline">Sudah punya akun? Login sekarang</a>
                 </div>
             </div>
