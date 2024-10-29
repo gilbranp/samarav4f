@@ -1,6 +1,9 @@
 @extends('frontend.layout.main')
 @section('content')
 
+
+
+
 <!-- Halaman Donasi -->
 <section id="donate" class="py-16 bg-green-600 text-white">
     <div class="container mx-auto px-6">
@@ -8,8 +11,14 @@
         <p class="text-lg md:text-xl text-center mb-12">Mari bersama membantu mereka yang membutuhkan. Setiap kontribusi sangat berarti untuk mewujudkan dunia tanpa kelaparan.</p>
 
         <div class="bg-white text-gray-800 p-8 rounded-lg shadow-2xl max-w-lg mx-auto">
-            <form id="donationForm" action="" method="POST">
+            <form id="donationForm" action="{{ route('donate.store') }}" method="POST">
                 @csrf
+                @if(session('success'))
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+                        <p class="font-bold">Berhasil!</p>
+                        <p>{{ session('success') }}</p>
+                    </div>
+                @endif
                 <div class="mb-6">
                     <label for="name" class="block text-lg font-semibold mb-2">Nama Lengkap</label>
                     <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
@@ -20,7 +29,6 @@
                     <input type="number" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
                 </div>
 
-                <!-- Pilihan Donasi -->
                 <div class="mb-6">
                     <label for="donation_type" class="block text-lg font-semibold mb-2">Jenis Donasi</label>
                     <select id="donation_type" name="donation_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
@@ -30,13 +38,11 @@
                     </select>
                 </div>
 
-                <!-- Input untuk jumlah donasi uang -->
                 <div id="amount_input" class="mb-6 hidden">
                     <label for="amount" class="block text-lg font-semibold mb-2">Jumlah Donasi (IDR)</label>
-                    <input type="number" id="amount" name="amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <input type="number" id="amount" name="amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
                 </div>
 
-                <!-- Input untuk jenis barang dan perkiraan kadaluarsa -->
                 <div id="item_input" class="hidden">
                     <div class="mb-6">
                         <label for="item_name" class="block text-lg font-semibold mb-2">Nama Barang</label>
@@ -76,61 +82,60 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Simulasi pengecekan autentikasi dari backend
-        let isAuthenticated = @json(Auth::check());
+document.addEventListener('DOMContentLoaded', function() {
+    let isAuthenticated = @json(Auth::check());
+    const form = document.getElementById('donationForm');
+    const modal = document.getElementById('loginModal');
+    const loginBtn = document.getElementById('loginBtn');
+    const closeModal = document.getElementById('closeModal');
+    
+    const donationTypeSelect = document.getElementById('donation_type');
+    const amountInput = document.getElementById('amount_input');
+    const itemInput = document.getElementById('item_input');
+    const amountField = document.getElementById('amount');
+    const itemNameField = document.getElementById('item_name');
+    const itemQtyField = document.getElementById('item_qty');
 
-        const form = document.getElementById('donationForm');
-        const modal = document.getElementById('loginModal');
-        const loginBtn = document.getElementById('loginBtn');
-        const closeModal = document.getElementById('closeModal');
-
-        // Ketika tombol Donasi Sekarang diklik
-        form.addEventListener('submit', function(event) {
-            if (!isAuthenticated) {
-                // Mencegah form dikirim jika belum login
-                event.preventDefault();
-
-                // Tampilkan modal login
-                modal.classList.remove('hidden');
-            }
-        });
-
-        // Arahkan ke halaman login ketika klik tombol Login di modal
-        loginBtn.addEventListener('click', function() {
-            window.location.href = '/login';
-        });
-
-        // Tutup modal ketika klik tombol Tutup
-        closeModal.addEventListener('click', function() {
-            modal.classList.add('hidden');
-        });
-
-        // JavaScript untuk menampilkan input sesuai pilihan jenis donasi
-        const donationTypeSelect = document.getElementById('donation_type');
-        const amountInput = document.getElementById('amount_input');
-        const itemInput = document.getElementById('item_input');
-
-        donationTypeSelect.addEventListener('change', function() {
-            const selectedValue = this.value;
-
-            // Jika pilih uang, tampilkan input jumlah donasi
-            if (selectedValue === 'uang') {
-                amountInput.classList.remove('hidden');
-                itemInput.classList.add('hidden');
-            } 
-            // Jika pilih barang, tampilkan input untuk jenis barang dan expired
-            else if (selectedValue === 'barang') {
-                itemInput.classList.remove('hidden');
-                amountInput.classList.add('hidden');
-            } 
-            // Jika tidak ada yang dipilih, sembunyikan semua input
-            else {
-                amountInput.classList.add('hidden');
-                itemInput.classList.add('hidden');
-            }
-        });
+    form.addEventListener('submit', function(event) {
+        if (!isAuthenticated) {
+            event.preventDefault();
+            modal.classList.remove('hidden');
+        }
     });
+
+    loginBtn.addEventListener('click', function() {
+        window.location.href = '/login';
+    });
+
+    closeModal.addEventListener('click', function() {
+        modal.classList.add('hidden');
+    });
+
+    donationTypeSelect.addEventListener('change', function() {
+        const selectedValue = this.value;
+
+        if (selectedValue === 'uang') {
+            amountInput.classList.remove('hidden');
+            itemInput.classList.add('hidden');
+            amountField.setAttribute('required', 'required');
+            itemNameField.removeAttribute('required');
+            itemQtyField.removeAttribute('required');
+        } else if (selectedValue === 'barang') {
+            itemInput.classList.remove('hidden');
+            amountInput.classList.add('hidden');
+            itemNameField.setAttribute('required', 'required');
+            itemQtyField.setAttribute('required', 'required');
+            amountField.removeAttribute('required');
+        } else {
+            amountInput.classList.add('hidden');
+            itemInput.classList.add('hidden');
+            amountField.removeAttribute('required');
+            itemNameField.removeAttribute('required');
+            itemQtyField.removeAttribute('required');
+        }
+    });
+});
+
 </script>
 
 @endsection

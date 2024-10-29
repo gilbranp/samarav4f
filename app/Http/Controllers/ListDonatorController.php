@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Donate;
 use Illuminate\Http\Request;
 
-class DonateController extends Controller
+class ListDonatorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('frontend.donate.donate');
+        $donates = Donate::all();
+        return view('backend.donate.index',compact('donates'));
     }
 
     /**
@@ -28,20 +29,7 @@ class DonateController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $validateData = $request->validate([
-           'name' => 'required',
-            'phone' => 'required',
-            'donation_type' => 'required',
-            'amount' => 'nullable',
-            'item_name' => 'nullable',
-            'item_qty' => 'nullable',
-            'expired_date' => 'nullable',
-            'message' => 'nullable',
-        ]);
-        Donate::create($validateData);
-        return redirect(route('donate.index'))->with('success','Anda telah melakukan donasi!');
-
+        //
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Donate extends Model
+class ListDonator extends Model
 {
     protected $guarded = [];
 }

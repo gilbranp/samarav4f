@@ -7,12 +7,14 @@
                     <span class="sidebar-content">Dashboard</span>
                 </a>
             </li>
+            @if (Auth::user()->level === 'Administrator')
             <li class="mb-4">
                 <a href="/listdonate" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-list-task mr-3 text-lg"></i>
                     <span class="sidebar-content">Daftar Pendonasi</span>
                 </a>
             </li>
+            @endif
             <li class="mb-4">
                 <a href="/managedonate" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-cash-stack mr-3 text-lg"></i>

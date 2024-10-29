@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('address');                           // Alamat lengkap
             $table->string('level');                           // Level pengguna (Pendonasi atau Penerima)
             $table->string('organitation')->nullable();        // Nama organisasi (opsional)
-            $table->integer('phone');                          // Nomor telepon
+            $table->string('phone');                          // Nomor telepon
             $table->string('job');                             // Pekerjaan
             $table->string('house_photo')->nullable();        // Foto rumah dari depan (opsional untuk Penerima)
             $table->timestamp('email_verified_at')->nullable(); // Waktu verifikasi email

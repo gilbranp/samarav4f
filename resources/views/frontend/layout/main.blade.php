@@ -41,6 +41,8 @@
           </div>
           <div class="hidden md:block">
             @if (Auth::user())
+            <a href="/dashboard" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Masuk Dashboard</a>
+            <a href="/donate" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium">Donasi Sekarang</a>
             @else
               <a href="/donate" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-md text-sm font-medium">Donasi Sekarang</a>
                 <a href="/login" class="bg-blue-500 text-white hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
@@ -66,10 +68,15 @@
           <a href="#about" class="text-gray-300 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Tentang Kami</a>
           <a href="#donation" class="text-gray-300 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Donasi Terkumpul</a>
           <a href="#contributors" class="text-gray-300 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Organisasi Kontributor</a>
-          <a href="/login" class="text-gray-300 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
       </div>
       <div class="px-2 pt-4 pb-3 border-t border-green-700">
-          <a href="/donate" class="bg-yellow-500 hover:bg-yellow-600 text-white block px-4 py-2 rounded-md text-base font-medium">Donasi Sekarang</a>
+        @if (Auth::user())
+            <a href="/dashboard" class="bg-blue-600 hover:bg-blue-700 text-white block px-4 py-2 rounded-md text-base font-medium">Masuk Dashboard</a>
+            <a href="/donate" class="bg-yellow-500 hover:bg-yellow-700 text-white block px-4 py-2 rounded-md text-base font-medium">Donasi Sekarang</a>
+        @else
+        <a href="/login" class="bg-blue-600 hover:bg-blue-700 text-white block px-4 py-2 rounded-md text-base font-medium">Login</a>
+            <a href="/donate" class="bg-yellow-500 hover:bg-yellow-700 text-white block px-4 py-2 rounded-md text-base font-medium">Donasi Sekarang</a>
+        @endif
       </div>
   </div>
 </nav>

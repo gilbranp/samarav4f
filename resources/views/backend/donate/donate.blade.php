@@ -28,12 +28,14 @@
             </div>
         </div>
 
+        @if (Auth::user()->level === 'Administrator')
         <!-- Tombol untuk Salurkan Donasi Baru -->
         <div class="text-center mb-4">
             <button id="openModal" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300">
                 Salurkan Donasi Baru
             </button>
-        </div>
+        </div>      
+        @endif
 
        <!-- Tabel Donasi yang Sudah Disalurkan -->
 <div class="bg-white p-6 rounded-lg shadow-lg">

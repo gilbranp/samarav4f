@@ -6,9 +6,6 @@
     <!-- Header Manajemen Donasi -->
     <div class="flex flex-col lg:flex-row justify-between items-center mb-6">
         <h1 class="text-3xl lg:text-4xl font-semibold text-green-700 mb-4 lg:mb-0 text-center lg:text-left">Daftar Pendonasi</h1>
-        {{-- <a href="#" class="bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-green-700 transition duration-300 text-center w-full lg:w-auto">
-            <i class="bi bi-plus-lg"></i> Tambah Donasi
-        </a> --}}
     </div>
 
     <!-- Tabel Donasi -->
@@ -21,27 +18,39 @@
                     <th class="py-2 px-4 border">Nama Donatur</th>
                     <th class="py-2 px-4 border">Jenis Donasi</th>
                     <th class="py-2 px-4 border">Jumlah Donasi</th>
-                    <th class="py-2 px-4 border">Tanggal Donasi</th>
-                    <th class="py-2 px-4 border">Status</th>
+                    <th class="py-2 px-4 border">Nama Barang</th>
+                    <th class="py-2 px-4 border">Jumlah Barang</th>
+                    <th class="py-2 px-4 border">Tanggal Kadaluarsa</th>
+                    <th class="py-2 px-4 border">Pesan Donatur</th>
                     <th class="py-2 px-4 border">Aksi</th>
                 </tr>
             </thead>
+            
             <tbody>
-                <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border">1</td>
-                    <td class="py-2 px-4 border">Radenta</td>
-                    <td class="py-2 px-4 border">Uang</td>
-                    <td class="py-2 px-4 border">50,000 IDR</td>
-                    <td class="py-2 px-4 border">2024-10-01</td>
-                    <td class="py-2 px-4 border">Sukses</td>
-                    <td class="py-2 px-4 border flex justify-around">
-                        <a href="#" class="text-blue-500 hover:text-blue-600"><i class="bi bi-eye"></i></a>
-                        <a href="#" class="text-yellow-500 hover:text-yellow-600"><i class="bi bi-pencil"></i></a>
-                        <a href="#" class="text-red-500 hover:text-red-600"><i class="bi bi-trash"></i></a>
-                    </td>
-                </tr>
-                <!-- Tambahkan data lainnya dengan loop -->
+                @forelse ($donates as $donate)
+                    <tr class="hover:bg-gray-100">
+                        <td class="py-2 px-4 border">{{ $loop->iteration }}</td>
+                        <td class="py-2 px-4 border">{{ $donate->name }}</td>
+                        <td class="py-2 px-4 border">{{ $donate->donation_type }}</td>
+                        <td class="py-2 px-4 border">{{ $donate->amount ? number_format($donate->amount) . ' IDR' : '-' }}</td>
+                        <td class="py-2 px-4 border">{{ $donate->item_name ?? '-' }}</td>
+                        <td class="py-2 px-4 border">{{ $donate->item_qty ?? '-' }}</td>
+                        <td class="py-2 px-4 border">{{ $donate->expired_date ? $donate->expired_date : '-' }}</td>
+                        <td class="py-2 px-4 border">{{ $donate->message ?? '-' }}</td>
+                        <td class="py-2 px-4 border flex justify-around">
+                            <a href="#" class="text-blue-500 hover:text-blue-600"><i class="bi bi-eye"></i></a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="9" class="text-center py-4">
+                            <span class="text-gray-500">Data belum tersedia</span>
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
+            
+            
         </table>
     </div>
 
