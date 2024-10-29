@@ -8,7 +8,7 @@
         <p class="text-lg md:text-xl text-center mb-12">Mari bersama membantu mereka yang membutuhkan. Setiap kontribusi sangat berarti untuk mewujudkan dunia tanpa kelaparan.</p>
 
         <div class="bg-white text-gray-800 p-8 rounded-lg shadow-2xl max-w-lg mx-auto">
-            <form id="donationForm" action="/donate" method="POST">
+            <form id="donationForm" action="" method="POST">
                 @csrf
                 <div class="mb-6">
                     <label for="name" class="block text-lg font-semibold mb-2">Nama Lengkap</label>
@@ -16,8 +16,8 @@
                 </div>
 
                 <div class="mb-6">
-                    <label for="email" class="block text-lg font-semibold mb-2">Nomor Telepon</label>
-                    <input type="number" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    <label for="phone" class="block text-lg font-semibold mb-2">Nomor Telepon</label>
+                    <input type="number" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
                 </div>
 
                 <!-- Pilihan Donasi -->
@@ -26,7 +26,7 @@
                     <select id="donation_type" name="donation_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
                         <option value="">Pilih jenis donasi</option>
                         <option value="uang">Uang</option>
-                        <option value="makanan">Makanan</option>
+                        <option value="barang">Barang</option>
                     </select>
                 </div>
 
@@ -36,15 +36,15 @@
                     <input type="number" id="amount" name="amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                 </div>
 
-                <!-- Input untuk jenis makanan dan perkiraan expired -->
-                <div id="food_input" class="hidden">
+                <!-- Input untuk jenis barang dan perkiraan kadaluarsa -->
+                <div id="item_input" class="hidden">
                     <div class="mb-6">
-                        <label for="food_name" class="block text-lg font-semibold mb-2">Jenis Makanan</label>
-                        <input type="text" id="food_name" name="food_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <label for="item_name" class="block text-lg font-semibold mb-2">Nama Barang</label>
+                        <input type="text" id="item_name" name="item_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     </div>
                     <div class="mb-6">
-                        <label for="food_qty" class="block text-lg font-semibold mb-2">Jumlah Makanan</label>
-                        <input type="number" id="food_qty" name="food_qty" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <label for="item_qty" class="block text-lg font-semibold mb-2">Jumlah Barang</label>
+                        <input type="number" id="item_qty" name="item_qty" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     </div>
 
                     <div class="mb-6">
@@ -109,7 +109,7 @@
         // JavaScript untuk menampilkan input sesuai pilihan jenis donasi
         const donationTypeSelect = document.getElementById('donation_type');
         const amountInput = document.getElementById('amount_input');
-        const foodInput = document.getElementById('food_input');
+        const itemInput = document.getElementById('item_input');
 
         donationTypeSelect.addEventListener('change', function() {
             const selectedValue = this.value;
@@ -117,17 +117,17 @@
             // Jika pilih uang, tampilkan input jumlah donasi
             if (selectedValue === 'uang') {
                 amountInput.classList.remove('hidden');
-                foodInput.classList.add('hidden');
+                itemInput.classList.add('hidden');
             } 
-            // Jika pilih makanan, tampilkan input untuk jenis makanan dan expired
-            else if (selectedValue === 'makanan') {
-                foodInput.classList.remove('hidden');
+            // Jika pilih barang, tampilkan input untuk jenis barang dan expired
+            else if (selectedValue === 'barang') {
+                itemInput.classList.remove('hidden');
                 amountInput.classList.add('hidden');
             } 
             // Jika tidak ada yang dipilih, sembunyikan semua input
             else {
                 amountInput.classList.add('hidden');
-                foodInput.classList.add('hidden');
+                itemInput.classList.add('hidden');
             }
         });
     });

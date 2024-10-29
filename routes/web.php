@@ -1,16 +1,17 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DonateController;
 
 Route::get('/', function () {
     return view('frontend.index');
 });
 
-Route::get('/donate', function () {
-    return view('donate');
-});
+// Route::get('/donate', function () {
+//     return view('donate');
+// });
 Route::get('/listdonate', function () {
     return view('backend.donate.index');
 });
@@ -60,3 +61,6 @@ Route::middleware('auth')->group(function(){
 Route::get('/404',function(){
     return view('404');
 });
+
+Route::post('/donate', [DonateController::class, 'store']);
+Route::post('/midtrans/callback', [DonateController::class, 'paymentCallback']);
