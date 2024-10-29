@@ -47,6 +47,12 @@
            
             <li class="mb-4">
                 <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="bi bi-chat mr-3 text-lg"></i>
+                    <span class="sidebar-content">Forum</span>
+                </a>
+            </li>
+            <li class="mb-4">
+                <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-bar-chart mr-3 text-lg"></i>
                     <span class="sidebar-content">Laporan</span>
                 </a>
