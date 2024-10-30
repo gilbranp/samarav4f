@@ -7,7 +7,7 @@
         <p class="text-lg md:text-xl text-center mb-10">Mari bersama membantu mereka yang membutuhkan. Setiap kontribusi sangat berarti untuk mewujudkan dunia tanpa kelaparan.</p>
 
         <div class="bg-white text-gray-800 p-6 rounded-lg shadow-2xl max-w-2xl mx-auto">
-            <form id="donationForm" action="{{ route('donate.store') }}" method="POST">
+            <form id="donationForm" action="{{ route('donate.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @if(session('success'))
                     <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-3 mb-4" role="alert">
@@ -15,6 +15,20 @@
                         <p>{{ session('success') }}</p>
                     </div>
                 @endif
+
+                @if ($errors->any())
+                <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+                    <strong class="font-bold">Terjadi kesalahan!</strong> 
+                    <span class="block sm:inline">Silakan perbaiki kesalahan berikut:</span>
+                    <ul class="list-disc pl-5 mt-2">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+
 
                 <!-- Grid Form -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -110,8 +124,12 @@
                     <p class="text-lg font-semibold mb-1">Nomor Rekening/E-Wallet:</p>
                     <p class="text-gray-700">Bank Mandiri - 1800013687605 (a.n. Samara) atau E-Wallet Dana - 081268477296</p>
                     
-                    <label for="transfer_receipt" class="block text-lg font-semibold mt-3 mb-1">Unggah Bukti Transfer</label>
-                    <input type="file" id="transfer_receipt" name="transfer_receipt" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <label for="transfer_receipt" class="block text-lg font-semibold mt-3 mb-1">
+                        Unggah Bukti Transfer
+                    </label>
+                    <input type="file" id="transfer_receipt" name="transfer_receipt" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" aria-describedby="transferReceiptHelp">
+                    <small id="transferReceiptHelp" class="text-gray-500">Hanya menerima file gambar (JPEG, PNG, JPG, GIF).</small>
+                    
                 </div>
                 <!-- Pesan -->
                 <div class="mb-4">
