@@ -27,42 +27,53 @@ class DonateController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    dd($request->all());
-    // Validasi data input
-    $validateData = $request->validate([
-        'name' => 'required',
-        'phone' => 'required',
-        'address' => 'required',
-        'donation_type' => 'required',
-        'amount' => 'nullable|integer',
-        'item_qty' => 'nullable|integer',
-        'expired_date' => 'nullable|date',
-        'donation_option' => 'nullable',
-        'resi_number' => 'nullable|string',
-        'jasa_distribusi' => 'nullable|string',
-        'payment_option' => 'required',
-        'message' => 'nullable|string',
-        'transfer_receipt' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    // Proses unggah foto bukti transfer jika ada
-    if ($request->hasFile('transfer_receipt')) {
-        $fileName = time() . '.' . $request->transfer_receipt->extension();
-        $path = $request->transfer_receipt->storeAs('transfer_receipts', $fileName, 'public'); // Simpan di storage/app/public/transfer_receipts
-        $validateData['transfer_receipt'] = $path; // Simpan path foto
+    {
+        // Validasi data input dengan pesan dalam Bahasa Indonesia
+        $validateData = $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'donation_type' => 'required',
+            'amount' => 'nullable|integer',
+            'item_qty' => 'nullable|integer',
+            'expired_date' => 'nullable|date',
+            'donation_option' => 'nullable',
+            'resi_number' => 'nullable',
+            'jasa_distribusi' => 'nullable',
+            'payment_option' => 'nullable',
+            'message' => 'nullable|string',
+            'transfer_receipt' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ], [
+            'required' => ':attribute wajib diisi.',
+            'integer' => ':attribute harus berupa angka.',
+            'date' => ':attribute harus berupa tanggal yang valid.',
+            'image' => ':attribute harus berupa gambar.',
+            'mimes' => ':attribute harus berupa file dengan tipe: :values.',
+            'string' => ':attribute harus berupa string.',
+        ]);
+        
+        // Proses unggah foto bukti transfer jika ada
+        if ($request->hasFile('transfer_receipt')) {
+            $fileName = time() . '.' . $request->transfer_receipt->extension();
+            $path = $request->transfer_receipt->storeAs('assets/img/transfer_receipts', $fileName, 'public'); // Simpan di storage/app/public/transfer_receipts
+            $validateData['transfer_receipt'] = $path; // Simpan path foto
+        }
+    
+        // Menambahkan status default
+        $validateData['status'] = 'pending';
+    
+        // Membuat entri donasi baru
+        try {
+            Donate::create($validateData);
+            // Redirect dengan pesan sukses
+            return redirect(route('donate.index'))->with('success', 'Anda telah melakukan donasi,status donasi sekarang pending');
+        } catch (\Exception $e) {
+            // Redirect dengan pesan error jika terjadi kesalahan
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+        }
     }
-
-    // Menambahkan status default
-    $validateData['status'] = 'pending';
-
-    // Membuat entri donasi baru
-    Donate::create($validateData);
-
-    // Redirect dengan pesan sukses
-    return redirect(route('donate.index'))->with('success', 'Anda telah melakukan donasi!');
-}
-
+    
+    
     
 
     /**
@@ -96,4 +107,14 @@ class DonateController extends Controller
     {
         //
     }
+
+    public function updateStatus($id, $status)
+    {
+        $donate = Donate::findOrFail($id);
+        $donate->status = $status; // Set status sesuai parameter (sukses atau ditolak)
+        $donate->save();
+
+        return redirect()->route('listdonate.index')->with('success', 'Status donasi berhasil diperbarui');
+    }
+
 }

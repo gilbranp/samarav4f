@@ -84,3 +84,5 @@ Route::resource('/donate',DonateController::class);
 // Route::get('/donate', [DonateController::class, 'index'])->name('donate.index');
 // Route::post('/donate', [DonateController::class, 'store'])->name('donate');
 // Route::post('/midtrans/callback', [DonateController::class, 'paymentCallback']);
+
+Route::post('/listdonate/{id}/updateStatus/{status}', [DonateController::class, 'updateStatus'])->name('listdonate.updateStatus');

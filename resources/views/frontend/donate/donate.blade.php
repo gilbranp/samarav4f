@@ -1,5 +1,24 @@
 @extends('frontend.layout.main')
 @section('content')
+
+
+<!-- Modal untuk Login -->
+@if(!Auth::check())
+<div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg p-6 max-w-lg mx-auto text-center shadow-lg">
+        <h2 class="text-2xl font-bold mb-4">Harap Login Terlebih Dahulu</h2>
+        <p class="mb-6">Anda harus login untuk melakukan donasi. Silakan login atau buat akun jika belum memiliki.</p>
+        <a href="{{ route('login') }}" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">Login</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginModal = document.getElementById('loginModal');
+    loginModal.style.display = 'block';
+});
+</script>
+@endif
 <!-- Halaman Donasi -->
 <section id="donate" class="py-12 bg-green-600 text-white">
     <div class="container mx-auto px-6 lg:px-12 xl:px-24">
@@ -7,7 +26,7 @@
         <p class="text-lg md:text-xl text-center mb-10">Mari bersama membantu mereka yang membutuhkan. Setiap kontribusi sangat berarti untuk mewujudkan dunia tanpa kelaparan.</p>
 
         <div class="bg-white text-gray-800 p-6 rounded-lg shadow-2xl max-w-2xl mx-auto">
-            <form id="donationForm" action="{{ route('donate.store') }}" method="POST">
+            <form id="donationForm" action="{{ route('donate.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @if(session('success'))
                     <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-3 mb-4" role="alert">
@@ -15,6 +34,20 @@
                         <p>{{ session('success') }}</p>
                     </div>
                 @endif
+
+                @if ($errors->any())
+                <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+                    <strong class="font-bold">Terjadi kesalahan!</strong> 
+                    <span class="block sm:inline">Silakan perbaiki kesalahan berikut:</span>
+                    <ul class="list-disc pl-5 mt-2">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            
+
 
                 <!-- Grid Form -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -46,10 +79,10 @@
                             <option value="alat pertanian">Alat Pertanian</option> 
                             <option value="pupuk kimia">Pupuk Kimia</option> 
                             <option value="pupuk organik">Pupuk Organik</option> 
-                            <option value="beras">Beras</option> 
+                            <option value="beras">Beras/kg</option> 
                             <option value="sagu">Sagu</option> 
-                            <option value="jagung">Jagung</option> 
-                            <option value="lainnya">Lainnya</option> 
+                            <option value="jagung">Jagung/kg</option> 
+                            {{-- <option value="lainnya">Lainnya</option>  --}}
                         </select>
                     </div>
 
@@ -110,8 +143,12 @@
                     <p class="text-lg font-semibold mb-1">Nomor Rekening/E-Wallet:</p>
                     <p class="text-gray-700">Bank Mandiri - 1800013687605 (a.n. Samara) atau E-Wallet Dana - 081268477296</p>
                     
-                    <label for="transfer_receipt" class="block text-lg font-semibold mt-3 mb-1">Unggah Bukti Transfer</label>
-                    <input type="file" id="transfer_receipt" name="transfer_receipt" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <label for="transfer_receipt" class="block text-lg font-semibold mt-3 mb-1">
+                        Unggah Bukti Transfer
+                    </label>
+                    <input type="file" id="transfer_receipt" name="transfer_receipt" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" aria-describedby="transferReceiptHelp">
+                    <small id="transferReceiptHelp" class="text-gray-500">Hanya menerima file gambar (JPEG, PNG, JPG, GIF).</small>
+                    
                 </div>
                 <!-- Pesan -->
                 <div class="mb-4">
@@ -133,6 +170,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
     const donationTypeSelect = document.getElementById('donation_type');
     const donationOptionSelect = document.getElementById('donation_option');
     const amountInput = document.getElementById('amount_input');

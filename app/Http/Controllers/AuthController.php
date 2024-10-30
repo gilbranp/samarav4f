@@ -33,7 +33,7 @@ class AuthController extends Controller
             'level' => 'required|string',
             'organitation' => 'nullable|string|max:255',
             'phone' => 'required|string|max:15|unique:users,phone',
-            'job' => 'required|string|max:255',
+            'job' => 'string|max:255',
             'password' => 'required|string|min:8',
             'house_photo' => 'nullable|image', // Maksimal 2MB, opsional
         ], [

@@ -62,9 +62,9 @@
           <div class="mt-6 text-center">
               <a href="/register" class="text-yellow-500 hover:underline">Belum punya akun? Daftar sekarang</a>
           </div>
-          <div class="mt-2 text-center">
+          {{-- <div class="mt-2 text-center">
               <a href="/forgot-password" class="text-yellow-500 hover:underline">Lupa password?</a>
-          </div>
+          </div> --}}
       </div>
     </div>
   </main>

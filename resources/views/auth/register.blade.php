@@ -57,14 +57,14 @@
                     <div id="housePhotoInput" class="mb-3 hidden">
                         <label for="housePhoto" class="block text-green-700 font-semibold mb-1">Upload Foto Rumah</label>
                         <input type="file" id="housePhoto" name="house_photo" accept="image/*" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                        <p class="text-xs text-gray-500">Unggah foto rumah dari depan.</p>
+                        <p class="text-xs text-gray-500">Unggah foto rumah dari depan.  (max 2mb)</p>
                     </div>
 
                     <!-- Input File Foto Selfie -->
                     <div class="mb-3">
                         <label for="selfie" class="block text-green-700 font-semibold mb-1">Upload Foto Selfie</label>
                         <input type="file" id="selfie" name="selfie" accept="image/*" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
-                        <p class="text-xs text-gray-500">Unggah foto selfie untuk keperluan identifikasi.</p>
+                        <p class="text-xs text-gray-500">Unggah foto selfie untuk keperluan identifikasi.  (max 2mb)</p>
                     </div>
 
                     <!-- Input Lainnya -->
@@ -83,20 +83,20 @@
                         <textarea id="address" name="address" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" rows="2" placeholder="Masukkan alamat lengkap" required></textarea>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="organitation" class="block text-green-700 font-semibold mb-1">Organisasi (Opsional)</label>
                         <input type="text" id="organitation" name="organitation" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan nama organisasi (Opsional)">
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="phone" class="block text-green-700 font-semibold mb-1">Nomor Telepon</label>
                         <input type="number" id="phone" name="phone" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan nomor telepon" required>
                     </div>
 
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="job" class="block text-green-700 font-semibold mb-1">Pekerjaan</label>
                         <input type="text" id="job" name="job" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder="Masukkan pekerjaan Anda" required>
-                    </div>
+                    </div> --}}
 
                     <div class="mb-3">
                         <label for="password" class="block text-green-700 font-semibold mb-1">Password</label>

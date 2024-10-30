@@ -13,6 +13,16 @@
             </div>
 
             <div>
+                <label class="font-semibold">Nomor Telepon:</label>
+                <p class="text-gray-700">{{ $donate->phone }}</p>
+            </div>
+
+            <div class="col-span-1 sm:col-span-2">
+                <label class="font-semibold">Alamat:</label>
+                <p class="text-gray-700 break-words">{{ $donate->address }}</p>
+            </div>
+
+            <div>
                 <label class="font-semibold">Tipe Donasi:</label>
                 <p class="text-gray-700">{{ $donate->donation_type }}</p>
             </div>
@@ -20,11 +30,6 @@
             <div>
                 <label class="font-semibold">Jumlah Donasi:</label>
                 <p class="text-gray-700">{{ $donate->amount ? number_format($donate->amount) . ' IDR' : '-' }}</p>
-            </div>
-
-            <div>
-                <label class="font-semibold">Nama Barang:</label>
-                <p class="text-gray-700">{{ $donate->item_name ?? '-' }}</p>
             </div>
 
             <div>
@@ -37,17 +42,68 @@
                 <p class="text-gray-700">{{ $donate->expired_date ?? '-' }}</p>
             </div>
 
+            <div>
+                <label class="font-semibold">Opsi Donasi:</label>
+                <p class="text-gray-700">{{ $donate->donation_option ?? '-' }}</p>
+            </div>
+
+            <div>
+                <label class="font-semibold">Nomor Resi:</label>
+                <p class="text-gray-700">{{ $donate->resi_number ?? '-' }}</p>
+            </div>
+
+            <div>
+                <label class="font-semibold">Jasa Distribusi:</label>
+                <p class="text-gray-700">{{ $donate->jasa_distribusi ?? '-' }}</p>
+            </div>
+
+            <div>
+                <label class="font-semibold">Metode Pembayaran:</label>
+                <p class="text-gray-700">{{ $donate->payment_option ?? '-' }}</p>
+            </div>
+
             <div class="col-span-1 sm:col-span-2">
                 <label class="font-semibold">Pesan dari Donatur:</label>
                 <p class="text-gray-700 break-words whitespace-pre-wrap">{{ $donate->message ?? '-' }}</p>
             </div>
+
+            <div>
+                <label class="font-semibold">Foto Bukti Transfer:</label>
+                <p class="text-gray-700">
+                    @if($donate->transfer_receipt)
+                        <a href="{{ asset('storage/' . $donate->transfer_receipt) }}" target="_blank" class="text-blue-500 underline">Lihat Bukti Transfer</a>
+                    @else
+                        Tidak ada
+                    @endif
+                </p>
+            </div>
+
+            <div>
+                <label class="font-semibold">Status Donasi:</label>
+                <p class="text-gray-700">{{ $donate->status }}</p>
+            </div>
         </div>
 
-        <div class="mt-6 flex justify-center sm:justify-end">
+        <div class="mt-6 flex justify-center sm:justify-between">
             <a href="{{ route('listdonate.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition duration-200">
                 Kembali
             </a>
+        
+            <!-- Button untuk ACC dan Tolak -->
+            @if (Auth::user()->level === 'Administrator')
+                 <form action="{{ route('listdonate.updateStatus', ['id' => $donate->id, 'status' => 'sukses']) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menyetujui donasi ini?');">
+                @csrf
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-200">ACC</button>
+            </form>
+            
+            <form action="{{ route('listdonate.updateStatus', ['id' => $donate->id, 'status' => 'ditolak']) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menolak donasi ini?');">
+                @csrf
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200">Tolak</button>
+            </form>
+            @endif
+           
         </div>
+        
     </div>
 </div>
 </section>

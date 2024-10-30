@@ -42,7 +42,7 @@
                 @forelse($donates as $donation)
                 <tr class="hover:bg-gray-100">
                     <td class="py-2 px-4 border">{{ $donation->name }}</td>
-                    <td class="py-2 px-4 border">xxx</td>
+                    <td class="py-2 px-4 border">08xxx</td>
                     <td class="py-2 px-4 border">{{ $donation->donation_type }}</td>
                     <td class="py-2 px-4 border">{{ number_format($donation->amount, 0, ',', '.') }} IDR</td>
                     <td class="py-2 px-4 border">{{ $donation->item_name ?? '-' }}</td>
