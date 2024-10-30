@@ -37,7 +37,8 @@ class ListDonatorController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $donate = Donate::findOrFail($id);
+        return view('backend.donate.showdonate',compact('donate'));
     }
 
     /**

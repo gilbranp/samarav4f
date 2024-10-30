@@ -6,7 +6,7 @@
     <div class="bg-green-500 text-white p-6 rounded-lg shadow-lg mb-8 text-center lg:text-left">
         <h1 class="text-3xl font-bold">Lacak Pesanan - ID #12345</h1>
         <p class="mt-2">
-            Lihat status terkini pengiriman pesanan Anda.
+            Lihat status terkini Distribusi pesanan Anda.
         </p>
     </div>
 
@@ -22,14 +22,14 @@
             <div>
                 <p><strong>Penerima:</strong> Yayasan Peduli</p>
                 <p><strong>Tanggal Pesanan:</strong> 12 Oktober 2024</p>
-                <p><strong>Status Pesanan:</strong> <span class="text-green-600 font-bold">Dalam Pengiriman</span></p>
+                <p><strong>Status Pesanan:</strong> <span class="text-green-600 font-bold">Dalam Distribusi</span></p>
             </div>
         </div>
     </div>
 
     <!-- Status Tracking -->
     <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
-        <h2 class="text-2xl font-semibold text-green-600 mb-4">Lacak Status Pengiriman</h2>
+        <h2 class="text-2xl font-semibold text-green-600 mb-4">Lacak Status Distribusi</h2>
         <div class="relative">
             <div class="border-l-2 border-green-500 absolute h-full top-0 left-4"></div>
             <ul class="space-y-8">
@@ -50,7 +50,7 @@
                     </div>
                     <div class="ml-6">
                         <p class="text-lg font-semibold">Pesanan Dikirim</p>
-                        <p class="text-sm text-gray-600">13 Oktober 2024 - Jasa Pengiriman</p>
+                        <p class="text-sm text-gray-600">13 Oktober 2024 - Jasa Distribusi</p>
                     </div>
                 </li>
                 <!-- Status 3 -->

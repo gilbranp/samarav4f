@@ -13,6 +13,12 @@ Route::get('/', function () {
 Route::get('/success', function () {
     return view('success');
 });
+Route::get('/forum', function () {
+    return view('backend.forum.forum');
+});
+Route::get('/laporan', function () {
+    return view('backend.laporan.laporan');
+});
 
 // Route::get('/donate', function () {
 //     return view('donate');

@@ -48,7 +48,8 @@
                     <td class="py-2 px-4 border">{{ $donation->item_name ?? '-' }}</td>
                     <td class="py-2 px-4 border">{{ $donation->item_qty ?? '-' }}</td>
                     <td class="py-2 px-4 border">{{ $donation->expired_date }}</td>
-                    <td class="py-2 px-4 border">{{ $donation->message ?? '-' }}</td>
+                    <td class="py-2 px-4 border">{{ \Illuminate\Support\Str::limit($donation->message, 30, '...') ?? '-' }}</td>
+
                 </tr>
                 @empty
                 <tr>

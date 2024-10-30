@@ -27,13 +27,14 @@
                     <span class="sidebar-content">Donasi Sekarang</span>
                 </a>
             </li>
+            @if (Auth::user()->level === 'Penerima')
             <li class="mb-4">
                 <a href="/acceptdonate" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-handbag-fill mr-3 text-lg"></i>
                     <span class="sidebar-content">Terima Donasi</span>
                 </a>
             </li>
-            
+             @endif
             @if (Auth::user()->level === 'Administrator')
             <li class="mb-4">
                 <a href="/manageuser" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
@@ -46,23 +47,23 @@
                 
            
             <li class="mb-4">
-                <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                <a href="/forum" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-chat mr-3 text-lg"></i>
                     <span class="sidebar-content">Forum</span>
                 </a>
             </li>
             <li class="mb-4">
-                <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                <a href="/laporan" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-bar-chart mr-3 text-lg"></i>
                     <span class="sidebar-content">Laporan</span>
                 </a>
             </li>
-            <li class="mb-4">
+            {{-- <li class="mb-4">
                 <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-gear-fill mr-3 text-lg"></i>
                     <span class="sidebar-content">Pengaturan</span>
                 </a>
-            </li>
+            </li> --}}
             {{-- <li>
                 <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-box-arrow-right mr-3 text-lg"></i>

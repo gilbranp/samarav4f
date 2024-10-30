@@ -26,9 +26,9 @@
                 </tr>
             </thead>
             
-            <tbody>
-                @forelse ($donates as $donate)
-                    <tr class="hover:bg-gray-100">
+            <tbody id="donateTableBody">
+                @forelse ($donates as $index => $donate)
+                    <tr class="donate-row hover:bg-gray-100">
                         <td class="py-2 px-4 border">{{ $loop->iteration }}</td>
                         <td class="py-2 px-4 border">{{ $donate->name }}</td>
                         <td class="py-2 px-4 border">{{ $donate->donation_type }}</td>
@@ -36,9 +36,11 @@
                         <td class="py-2 px-4 border">{{ $donate->item_name ?? '-' }}</td>
                         <td class="py-2 px-4 border">{{ $donate->item_qty ?? '-' }}</td>
                         <td class="py-2 px-4 border">{{ $donate->expired_date ? $donate->expired_date : '-' }}</td>
-                        <td class="py-2 px-4 border">{{ $donate->message ?? '-' }}</td>
+                        <td class="py-2 px-4 border">{{ \Illuminate\Support\Str::limit($donate->message, 20, '...') ?? '-' }}</td>
                         <td class="py-2 px-4 border flex justify-around">
-                            <a href="#" class="text-blue-500 hover:text-blue-600"><i class="bi bi-eye"></i></a>
+                            <a href="{{ route('listdonate.show',$donate->id) }}"><button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition duration-200">
+                                <i class="bi bi-eye"></i> Lihat
+                            </button></a>
                         </td>
                     </tr>
                 @empty
@@ -49,20 +51,50 @@
                     </tr>
                 @endforelse
             </tbody>
-            
-            
         </table>
     </div>
 
     <!-- Pagination Responsif -->
     <div class="mt-6 flex flex-col lg:flex-row justify-between items-center">
-        <a href="#" class="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg shadow hover:bg-gray-300 transition duration-200 w-full lg:w-auto mb-4 lg:mb-0 text-center">
+        <button onclick="prevPage()" class="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg shadow hover:bg-gray-300 transition duration-200 w-full lg:w-auto mb-4 lg:mb-0 text-center">
             <i class="bi bi-arrow-left"></i> Sebelumnya
-        </a>
-        <a href="#" class="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg shadow hover:bg-gray-300 transition duration-200 w-full lg:w-auto text-center">
+        </button>
+        <button onclick="nextPage()" class="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg shadow hover:bg-gray-300 transition duration-200 w-full lg:w-auto text-center">
             Berikutnya <i class="bi bi-arrow-right"></i>
-        </a>
+        </button>
     </div>
 </main>
+
+<!-- Script Paginasi -->
+<script>
+    const rows = document.querySelectorAll('.donate-row');
+    const rowsPerPage = 5;
+    let currentPage = 1;
+
+    function displayRows() {
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        rows.forEach((row, index) => {
+            row.style.display = (index >= start && index < end) ? 'table-row' : 'none';
+        });
+    }
+
+    function nextPage() {
+        if (currentPage < Math.ceil(rows.length / rowsPerPage)) {
+            currentPage++;
+            displayRows();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayRows();
+        }
+    }
+
+    // Tampilkan halaman pertama saat halaman dimuat
+    displayRows();
+</script>
 
 @endsection
