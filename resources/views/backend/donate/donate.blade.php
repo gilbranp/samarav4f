@@ -17,13 +17,13 @@
             <!-- Total Donasi Uang -->
             <div class="bg-white p-6 rounded-lg shadow-lg text-center">
                 <h2 class="text-2xl font-semibold text-green-700 mb-2">Total Donasi Uang</h2>
-                <p class="text-4xl font-bold">Rp 10.000.000</p>
+                <p class="text-4xl font-bold">Rp {{ number_format($totalCashDonate, 0, ',', '.') }}</p>
                 <p class="text-gray-600 mt-2">Diterima dari 50 donatur</p>
             </div>
             <!-- Total Donasi Makanan -->
             <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                <h2 class="text-2xl font-semibold text-green-700 mb-2">Total Donasi Makanan</h2>
-                <p class="text-4xl font-bold">200 Paket</p>
+                <h2 class="text-2xl font-semibold text-green-700 mb-2">Total Donasi Barang</h2>
+                <p class="text-4xl font-bold">{{ $totalItemDonate }} Paket</p>
                 <p class="text-gray-600 mt-2">Diterima dari 30 donatur</p>
             </div>
         </div>
@@ -54,51 +54,36 @@
                 </tr>
             </thead>
             <tbody>
+                @forelse($donates as $no => $donation)
                 <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border">1</td>
-                    <td class="py-2 px-4 border">Makanan</td>
-                    <td class="py-2 px-4 border">100 Paket</td>
-                    <td class="py-2 px-4 border">Penerima A</td>
-                    <td class="py-2 px-4 border">12 Oktober 2024</td>
+                    <?php 
+                        $jmlhDonasi = $donation->donation_type == "uang" 
+                            ? "RP. " . number_format($donation->amount, 0, ',', '.') 
+                            : number_format($donation->item_qty, 0, ',', '.') . " Paket";
+
+                            $date = new DateTime($donation->created_at);
+                            $formattedDate = $date->format('d F Y');
+
+                    ?>
+                    <td class="py-2 px-4 border">{{ $no + 1 }}</td>
+                    <td class="py-2 px-4 border">{{ $donation->donation_type }}</td>
+                    <td class="py-2 px-4 border">{{ $jmlhDonasi }}</td>
+                    <td class="py-2 px-4 border">{{ $donation->penerima->name }}</td>
+                    <td class="py-2 px-4 border">{{ $formattedDate ?? '-'}}</td>
                     <td class="py-2 px-4 border">
-                        <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs">Disalurkan</span>
+                        <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs">{{ $donation->status }}</span>
                     </td>
                     <td class="py-2 px-4 border text-center">
-                        <a href="/track/1" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                        <a href="/tracking/{{$donation->id}}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
                            Lacak
                         </a>
-                    </td> <!-- Tambahkan tombol lacak -->
+                    </td> 
                 </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border">2</td>
-                    <td class="py-2 px-4 border">Uang</td>
-                    <td class="py-2 px-4 border">Rp 5.000.000</td>
-                    <td class="py-2 px-4 border">Penerima B</td>
-                    <td class="py-2 px-4 border">10 Oktober 2024</td>
-                    <td class="py-2 px-4 border">
-                        <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs">Disalurkan</span>
-                    </td>
-                    <td class="py-2 px-4 border text-center">
-                        <a href="/track/2" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-                           Lacak
-                        </a>
-                    </td> <!-- Tambahkan tombol lacak -->
+                @empty
+                <tr>
+                    <td colspan="8" class="py-2 px-4 border text-center">Tidak ada donasi tersedia.</td>
                 </tr>
-                <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border">3</td>
-                    <td class="py-2 px-4 border">Makanan</td>
-                    <td class="py-2 px-4 border">50 Paket</td>
-                    <td class="py-2 px-4 border">Penerima C</td>
-                    <td class="py-2 px-4 border">9 Oktober 2024</td>
-                    <td class="py-2 px-4 border">
-                        <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs">Disalurkan</span>
-                    </td>
-                    <td class="py-2 px-4 border text-center">
-                        <a href="/track/3" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-                           Lacak
-                        </a>
-                    </td> <!-- Tambahkan tombol lacak -->
-                </tr>
+                @endforelse
                 <!-- Tambahkan baris donasi lain di sini -->
             </tbody>
         </table>
@@ -117,23 +102,15 @@
                             Jenis Donasi
                         </label>
                         <select id="jenisDonasi" class="form-select px-3 py-2 border rounded-lg w-full" onchange="toggleFoodOptions()">
-                            <option selected>Pilih Jenis Donasi</option>
+                            <option value="">Pilih jenis donasi</option>
                             <option value="uang">Uang</option>
-                            <option value="makanan">Makanan</option>
-                        </select>
-                    </div>
-
-                    <!-- Pilihan Makanan -->
-                    <div id="foodOptions" class="hidden mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="makananDonasi">
-                            Pilih Makanan
-                        </label>
-                        <select id="makananDonasi" class="form-select px-3 py-2 border rounded-lg w-full">
-                            <option selected>Pilih Makanan</option>
-                            <option value="nasi">Nasi</option>
-                            <option value="roti">Roti</option>
-                            <option value="buah">Buah</option>
-                            <option value="snack">Snack</option>
+                            <option value="alat pertanian">Alat Pertanian</option> 
+                            <option value="pupuk kimia">Pupuk Kimia</option> 
+                            <option value="pupuk organik">Pupuk Organik</option> 
+                            <option value="beras">Beras</option> 
+                            <option value="sagu">Sagu</option> 
+                            <option value="jagung">Jagung</option> 
+                            <option value="lainnya">Lainnya</option> 
                         </select>
                     </div>
 
@@ -146,25 +123,24 @@
                     </div>
 
                    <!-- Pilih Penerima Donasi -->
-<div class="mb-4">
-    <label class="block text-gray-700 font-bold mb-2" for="penerimaDonasi">
-        Penerima Donasi
-    </label>
-    <select id="penerimaDonasi" class="form-select px-3 py-2 border rounded-lg w-full" onchange="showProfileButton()">
-        <option selected>Pilih Penerima Donasi</option>
-        <option value="penerimaA">Penerima A</option>
-        <option value="penerimaB">Penerima B</option>
-        <option value="penerimaC">Penerima C</option>
-    </select>
-</div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-bold mb-2" for="penerimaDonasi">
+                            Penerima Donasi
+                        </label>
+                        <select id="penerimaDonasi" class="form-select px-3 py-2 border rounded-lg w-full" onchange="showProfileButton()">
+                            <option selected>Pilih Penerima Donasi</option>
+                            <option value="penerimaA">Penerima A</option>
+                            <option value="penerimaB">Penerima B</option>
+                            <option value="penerimaC">Penerima C</option>
+                        </select>
+                    </div>
 
-<!-- Placeholder untuk Tombol Profil -->
-<div id="profileButtonContainer" class="mb-4 hidden">
-    <a id="profileButton" href="#" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-        Lihat Profil Penerima
-    </a>
-</div>
-
+                    <!-- Placeholder untuk Tombol Profil -->
+                    <div id="profileButtonContainer" class="mb-4 hidden">
+                        <a id="profileButton" href="#" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                            Lihat Profil Penerima
+                        </a>
+                    </div>
 
                     <!-- Tombol Salurkan -->
                     <div class="text-center">
@@ -196,17 +172,6 @@
             donationModal.classList.add('hidden');
         });
     });
-
-    function toggleFoodOptions() {
-        const jenisDonasi = document.getElementById('jenisDonasi').value;
-        const foodOptions = document.getElementById('foodOptions');
-
-        if (jenisDonasi === 'makanan') {
-            foodOptions.classList.remove('hidden');
-        } else {
-            foodOptions.classList.add('hidden');
-        }
-    }
 </script>
 <script>
     function showProfileButton() {

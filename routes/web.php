@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DistributionDonateController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\ListDonatorController;
+use App\Models\DistributionDonate;
 
 Route::get('/', function () {
     return view('frontend.index');
@@ -47,7 +49,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('/listdonate',ListDonatorController::class);
    
     });
-    
+    Route::get('/managedonate', [DistributionDonateController::class, 'index'])->name('donate.managedonate');
 
     Route::get('/forum', function () {
         return view('backend.forum.forum');
@@ -55,9 +57,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/laporan', function () {
         return view('backend.laporan.laporan');
     });
-    Route::get('/managedonate', function () {
-        return view('backend.donate.donate');
-    });
+    // Route::get('/managedonate', function () {
+    //     return view('backend.donate.donate');
+    // });
     
     Route::get('/acceptdonate', function () {
         return view('backend.donate.acceptdonate');
