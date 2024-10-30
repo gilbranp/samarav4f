@@ -1,137 +1,179 @@
 @extends('frontend.layout.main')
 @section('content')
-
-
-
-
 <!-- Halaman Donasi -->
-<section id="donate" class="py-16 bg-green-600 text-white">
-    <div class="container mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-8">Donasi Sekarang</h2>
-        <p class="text-lg md:text-xl text-center mb-12">Mari bersama membantu mereka yang membutuhkan. Setiap kontribusi sangat berarti untuk mewujudkan dunia tanpa kelaparan.</p>
+<section id="donate" class="py-12 bg-green-600 text-white">
+    <div class="container mx-auto px-6 lg:px-12 xl:px-24">
+        <h2 class="text-3xl font-bold text-center mb-6">Donasi Sekarang</h2>
+        <p class="text-lg md:text-xl text-center mb-10">Mari bersama membantu mereka yang membutuhkan. Setiap kontribusi sangat berarti untuk mewujudkan dunia tanpa kelaparan.</p>
 
-        <div class="bg-white text-gray-800 p-8 rounded-lg shadow-2xl max-w-lg mx-auto">
+        <div class="bg-white text-gray-800 p-6 rounded-lg shadow-2xl max-w-2xl mx-auto">
             <form id="donationForm" action="{{ route('donate.store') }}" method="POST">
                 @csrf
                 @if(session('success'))
-                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-3 mb-4" role="alert">
                         <p class="font-bold">Berhasil!</p>
                         <p>{{ session('success') }}</p>
                     </div>
                 @endif
-                <div class="mb-6">
-                    <label for="name" class="block text-lg font-semibold mb-2">Nama Lengkap</label>
-                    <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+
+                <!-- Grid Form -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+                    <!-- Nama Lengkap -->
+                    <div>
+                        <label for="name" class="block text-lg font-semibold mb-1">Nama Lengkap</label>
+                        <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+
+                    <!-- Nomor Telepon -->
+                    <div>
+                        <label for="phone" class="block text-lg font-semibold mb-1">Nomor Telepon</label>
+                        <input type="number" id="phone" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="lg:col-span-2">
+                        <label for="address" class="block text-lg font-semibold mb-1">Alamat</label>
+                        <textarea id="address" name="address" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                    </div>
+
+                    <!-- Jenis Donasi -->
+                    <div>
+                        <label for="donation_type" class="block text-lg font-semibold mb-1">Jenis Donasi</label>
+                        <select id="donation_type" name="donation_type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <option value="">Pilih jenis donasi</option>
+                            <option value="uang">Uang</option>
+                            <option value="alat pertanian">Alat Pertanian</option> 
+                            <option value="pupuk kimia">Pupuk Kimia</option> 
+                            <option value="pupuk organik">Pupuk Organik</option> 
+                            <option value="beras">Beras</option> 
+                            <option value="sagu">Sagu</option> 
+                            <option value="jagung">Jagung</option> 
+                            <option value="lainnya">Lainnya</option> 
+                        </select>
+                    </div>
+
+                    <!-- Jumlah Donasi Uang -->
+                    <div id="amount_input" class="hidden">
+                        <label for="amount" class="block text-lg font-semibold mb-1">Jumlah Donasi (IDR)</label>
+                        <input type="number" id="amount" name="amount" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+
+                    <!-- Input Donasi Barang -->
+                    <div id="item_input" class="hidden lg:col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div>
+                            <label for="item_qty" class="block text-lg font-semibold mb-1">Jumlah</label>
+                            <input type="number" id="item_qty" name="item_qty" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label for="expired_date" class="block text-lg font-semibold mb-1">Perkiraan Kadaluarsa (Opsional)</label>
+                            <input type="date" id="expired_date" name="expired_date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label for="donation_option" class="block text-lg font-semibold mb-1">Pilih Opsi Donasi</label>
+                            <select id="donation_option" name="donation_option" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <option value="">Pilih opsi</option>
+                                <option value="Dikirim">Dikirim</option>
+                                <option value="Dijemput">Dijemput</option>
+                            </select>
+                        </div>
+                        <div id="resi_input" class="hidden">
+                            <label for="resi_number" class="block text-lg font-semibold mb-1">Nomor Resi</label>
+                            <input type="text" id="resi_number" name="resi_number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div id="distribusi_input" class="hidden">
+                            <label for="jasa_distribusi" class="block text-lg font-semibold mb-1">Jasa Distribusi</label>
+                            <select id="jasa_distribusi" name="jasa_distribusi" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <option value="">Pilih jasa distribusi</option>
+                                <option value="JNE">JNE</option>
+                                <option value="TIKI">TIKI</option>
+                                <option value="POS">POS</option>
+                                <option value="Grab">Grab</option>
+                                <option value="Gojek">Gojek</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mb-6">
-                    <label for="phone" class="block text-lg font-semibold mb-2">Nomor Telepon</label>
-                    <input type="number" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                </div>
-
-                <div class="mb-6">
-                    <label for="donation_type" class="block text-lg font-semibold mb-2">Jenis Donasi</label>
-                    <select id="donation_type" name="donation_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
-                        <option value="">Pilih jenis donasi</option>
-                        <option value="uang">Uang</option>
-                        <option value="barang">Barang</option>
+               <!-- Pilihan Metode Pembayaran -->
+                <div id="payment_option_input" class="hidden">
+                    <label for="payment_option" class="block text-lg font-semibold mb-1">Metode Pembayaran</label>
+                    <select id="payment_option" name="payment_option" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="">Pilih metode pembayaran</option>
+                        <option value="manual">Manual</option>
+                        <option value="otomatis">Otomatis</option>
                     </select>
                 </div>
 
-                <div id="amount_input" class="mb-6 hidden">
-                    <label for="amount" class="block text-lg font-semibold mb-2">Jumlah Donasi (IDR)</label>
-                    <input type="number" id="amount" name="amount" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                <!-- Informasi Transfer Manual -->
+                <div id="manual_transfer_info" class="hidden mt-4">
+                    <p class="text-lg font-semibold mb-1">Nomor Rekening/E-Wallet:</p>
+                    <p class="text-gray-700">Bank Mandiri - 1800013687605 (a.n. Samara) atau E-Wallet Dana - 081268477296</p>
+                    
+                    <label for="transfer_receipt" class="block text-lg font-semibold mt-3 mb-1">Unggah Bukti Transfer</label>
+                    <input type="file" id="transfer_receipt" name="transfer_receipt" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <!-- Pesan -->
+                <div class="mb-4">
+                    <label for="message" class="block text-lg font-semibold mb-1">Pesan (Opsional)</label>
+                    <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
                 </div>
 
-                <div id="item_input" class="hidden">
-                    <div class="mb-6">
-                        <label for="item_name" class="block text-lg font-semibold mb-2">Nama Barang</label>
-                        <input type="text" id="item_name" name="item_name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                    </div>
-                    <div class="mb-6">
-                        <label for="item_qty" class="block text-lg font-semibold mb-2">Jumlah Barang</label>
-                        <input type="number" id="item_qty" name="item_qty" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                    </div>
 
-                    <div class="mb-6">
-                        <label for="expired_date" class="block text-lg font-semibold mb-2">Perkiraan Kadaluarsa</label>
-                        <input type="date" id="expired_date" name="expired_date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
-                    </div>
-                </div>
-
-                <div class="mb-6">
-                    <label for="message" class="block text-lg font-semibold mb-2">Pesan (Opsional)</label>
-                    <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
-                </div>
-
-                <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 rounded-lg hover:bg-green-700 transition duration-300">Donasi Sekarang</button>
+                <!-- Tombol Submit -->
+                <button type="submit" class="w-full bg-green-600 text-white font-bold py-2 rounded-lg hover:bg-green-700 transition duration-300">Donasi Sekarang</button>
             </form>
         </div>
     </div>
 </section>
 
-<!-- Notifikasi menggunakan modal -->
-<div id="loginModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
-    <div class="bg-white p-8 rounded-lg shadow-lg">
-        <p class="text-lg text-gray-800 mb-4">Anda harus login terlebih dahulu untuk melakukan donasi.</p>
-        <div class="flex justify-end">
-            <button id="loginBtn" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">Login</button>
-            <button id="closeModal" class="ml-4 bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-700">Tutup</button>
-        </div>
-    </div>
-</div>
+
+<!-- Tambahkan pilihan manual atau otomatis untuk jenis donasi uang -->
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    let isAuthenticated = @json(Auth::check());
-    const form = document.getElementById('donationForm');
-    const modal = document.getElementById('loginModal');
-    const loginBtn = document.getElementById('loginBtn');
-    const closeModal = document.getElementById('closeModal');
-    
     const donationTypeSelect = document.getElementById('donation_type');
+    const donationOptionSelect = document.getElementById('donation_option');
     const amountInput = document.getElementById('amount_input');
     const itemInput = document.getElementById('item_input');
-    const amountField = document.getElementById('amount');
-    const itemNameField = document.getElementById('item_name');
-    const itemQtyField = document.getElementById('item_qty');
+    const resiInput = document.getElementById('resi_input');
+    const distribusiInput = document.getElementById('distribusi_input');
+    const paymentOptionInput = document.getElementById('payment_option'); // Mengambil elemen select dari metode pembayaran
+    const paymentOptionContainer = document.getElementById('payment_option_input'); // Container untuk pilihan metode pembayaran
+    const manualTransferInfo = document.getElementById('manual_transfer_info'); // Info transfer manual
 
-    form.addEventListener('submit', function(event) {
-        if (!isAuthenticated) {
-            event.preventDefault();
-            modal.classList.remove('hidden');
+    donationTypeSelect.addEventListener('change', function() {
+        if (this.value === 'uang') {
+            amountInput.classList.remove('hidden');
+            paymentOptionContainer.classList.remove('hidden'); // Menampilkan container metode pembayaran
+            itemInput.classList.add('hidden');
+        } else {
+            itemInput.classList.remove('hidden');
+            amountInput.classList.add('hidden');
+            paymentOptionContainer.classList.add('hidden'); // Menyembunyikan container metode pembayaran
+            manualTransferInfo.classList.add('hidden'); // Menyembunyikan info transfer manual
         }
     });
 
-    loginBtn.addEventListener('click', function() {
-        window.location.href = '/login';
-    });
-
-    closeModal.addEventListener('click', function() {
-        modal.classList.add('hidden');
-    });
-
-    donationTypeSelect.addEventListener('change', function() {
-        const selectedValue = this.value;
-
-        if (selectedValue === 'uang') {
-            amountInput.classList.remove('hidden');
-            itemInput.classList.add('hidden');
-            amountField.setAttribute('required', 'required');
-            itemNameField.removeAttribute('required');
-            itemQtyField.removeAttribute('required');
-        } else if (selectedValue === 'barang') {
-            itemInput.classList.remove('hidden');
-            amountInput.classList.add('hidden');
-            itemNameField.setAttribute('required', 'required');
-            itemQtyField.setAttribute('required', 'required');
-            amountField.removeAttribute('required');
+    paymentOptionInput.addEventListener('change', function() {
+        if (this.value === 'manual') {
+            manualTransferInfo.classList.remove('hidden'); // Tampilkan info transfer manual
         } else {
-            amountInput.classList.add('hidden');
-            itemInput.classList.add('hidden');
-            amountField.removeAttribute('required');
-            itemNameField.removeAttribute('required');
-            itemQtyField.removeAttribute('required');
+            manualTransferInfo.classList.add('hidden'); // Sembunyikan info transfer manual
+        }
+    });
+
+    donationOptionSelect.addEventListener('change', function() {
+        if (this.value === 'Dikirim') {
+            resiInput.classList.remove('hidden');
+            distribusiInput.classList.add('hidden');
+        } else if (this.value === 'Dijemput') {
+            distribusiInput.classList.remove('hidden');
+            resiInput.classList.add('hidden');
+        } else {
+            resiInput.classList.add('hidden');
+            distribusiInput.classList.add('hidden');
         }
     });
 });

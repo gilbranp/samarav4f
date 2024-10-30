@@ -27,22 +27,43 @@ class DonateController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        // dd($request->all());
-        $validateData = $request->validate([
-           'name' => 'required',
-            'phone' => 'required',
-            'donation_type' => 'required',
-            'amount' => 'nullable',
-            'item_name' => 'nullable',
-            'item_qty' => 'nullable',
-            'expired_date' => 'nullable',
-            'message' => 'nullable',
-        ]);
-        Donate::create($validateData);
-        return redirect(route('donate.index'))->with('success','Anda telah melakukan donasi!');
+{
+    dd($request->all());
+    // Validasi data input
+    $validateData = $request->validate([
+        'name' => 'required',
+        'phone' => 'required',
+        'address' => 'required',
+        'donation_type' => 'required',
+        'amount' => 'nullable|integer',
+        'item_qty' => 'nullable|integer',
+        'expired_date' => 'nullable|date',
+        'donation_option' => 'nullable',
+        'resi_number' => 'nullable|string',
+        'jasa_distribusi' => 'nullable|string',
+        'payment_option' => 'required',
+        'message' => 'nullable|string',
+        'transfer_receipt' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
+    // Proses unggah foto bukti transfer jika ada
+    if ($request->hasFile('transfer_receipt')) {
+        $fileName = time() . '.' . $request->transfer_receipt->extension();
+        $path = $request->transfer_receipt->storeAs('transfer_receipts', $fileName, 'public'); // Simpan di storage/app/public/transfer_receipts
+        $validateData['transfer_receipt'] = $path; // Simpan path foto
     }
+
+    // Menambahkan status default
+    $validateData['status'] = 'pending';
+
+    // Membuat entri donasi baru
+    Donate::create($validateData);
+
+    // Redirect dengan pesan sukses
+    return redirect(route('donate.index'))->with('success', 'Anda telah melakukan donasi!');
+}
+
+    
 
     /**
      * Display the specified resource.

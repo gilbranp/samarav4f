@@ -32,12 +32,12 @@
       <div class="flex items-center justify-between h-16">
           <div class="flex items-center">
               <a href="/" class="text-white text-2xl font-bold">SAMARA</a>
-              <div class="hidden md:block ml-10 space-x-4">
+              {{-- <div class="hidden md:block ml-10 space-x-4">
                   <a href="/#about" class="text-gray-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Tentang Kami</a>
                   <a href="/#donation" class="text-gray-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Donasi Terkumpul</a>
                   <a href="/#contributors" class="text-gray-300 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Organisasi Kontributor</a>
                 
-              </div>
+              </div> --}}
           </div>
           <div class="hidden md:block">
             @if (Auth::user())
@@ -64,11 +64,11 @@
 
   <!-- Mobile menu -->
   <div class="md:hidden hidden" id="mobile-menu">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      {{-- <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <a href="#about" class="text-gray-300 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Tentang Kami</a>
           <a href="#donation" class="text-gray-300 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Donasi Terkumpul</a>
           <a href="#contributors" class="text-gray-300 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Organisasi Kontributor</a>
-      </div>
+      </div> --}}
       <div class="px-2 pt-4 pb-3 border-t border-green-700">
         @if (Auth::user())
             <a href="/dashboard" class="bg-blue-600 hover:bg-blue-700 text-white block px-4 py-2 rounded-md text-base font-medium">Masuk Dashboard</a>

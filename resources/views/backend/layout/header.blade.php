@@ -1,7 +1,7 @@
 <header class="bg-green-600 text-white p-4 shadow-lg flex justify-between items-center">
     <!-- Logo dan Tombol Sidebar -->
     <div class="flex items-center">
-        <h1 class="text-2xl font-bold ml-4">SAMARA Admin</h1>
+        <h1 class="text-2xl font-bold ml-4">SAMARA</h1>
         <button id="toggleSidebar" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300">
             <i class="bi bi-list"></i>
         </button>

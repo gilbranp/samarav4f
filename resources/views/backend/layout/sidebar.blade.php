@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <aside id="sidebar" class="sidebar sidebar-open bg-green-600 text-white h-full p-4 shadow-2xl lg:block transition-transform duration-300">
     <nav>
         <ul>
@@ -44,8 +46,6 @@
             </li>
             @endif
             
-                
-           
             <li class="mb-4">
                 <a href="/forum" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-chat mr-3 text-lg"></i>
@@ -58,6 +58,19 @@
                     <span class="sidebar-content">Laporan</span>
                 </a>
             </li>
+            <li class="mb-4">
+                <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-network-wired mr-3 text-lg"></i>
+                    <span class="sidebar-content">IOT</span>
+                </a>
+            </li>
+            <li class="mb-4">
+                <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-brain mr-3 text-lg"></i>
+                    <span class="sidebar-content">AI Samara</span>
+                </a>
+            </li>
+            
             {{-- <li class="mb-4">
                 <a href="#" class="flex items-center py-3 px-4 rounded-lg hover:bg-green-500 hover:shadow-md transition duration-300 ease-in-out transform hover:scale-105">
                     <i class="bi bi-gear-fill mr-3 text-lg"></i>

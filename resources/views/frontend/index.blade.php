@@ -10,7 +10,7 @@
     </div>
 </section>
 
-<!-- Tentang Kami -->
+{{-- <!-- Tentang Kami -->
 <section id="about" class="py-16 bg-green-600 text-white">
   <div class="container mx-auto px-6">
       <h2 class="text-4xl font-bold text-center mb-8">Tentang Kami</h2>
@@ -145,5 +145,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection

@@ -13,16 +13,25 @@ return new class extends Migration
     {
         Schema::create('donates', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nama donatur
-            $table->string('phone'); // Nomor telepon donatur
-            $table->string('donation_type'); // Jenis donasi
-            $table->integer('amount')->nullable(); // Jumlah donasi (untuk uang)
-            $table->string('item_name')->nullable(); // Nama barang (untuk donasi barang)
-            $table->integer('item_qty')->nullable(); // Jumlah barang
-            $table->date('expired_date')->nullable(); // Tanggal kadaluarsa (untuk donasi barang)
-            $table->text('message')->nullable(); // Pesan dari donatur
+            $table->string('name'); // Nama Lengkap
+            $table->string('phone'); // Nomor Telepon
+            $table->text('address'); // Alamat
+            $table->string('donation_type'); // Jenis Donasi
+            $table->integer('amount')->nullable(); // Jumlah Donasi (uang)
+            $table->integer('item_qty')->nullable(); // Jumlah (untuk donasi barang)
+            $table->date('expired_date')->nullable(); // Tanggal Kadaluarsa (opsional untuk donasi barang)
+            $table->string('donation_option')->nullable(); // Opsi Donasi
+            $table->string('resi_number')->nullable(); // Nomor Resi (jika opsi 'dikirim')
+            $table->string('jasa_distribusi')->nullable(); // Jasa distribusi
+            $table->string('payment_option')->nullable(); // Metode Pembayaran
+            $table->text('message')->nullable(); // Pesan opsional dari donatur
+            $table->string('transfer_receipt')->nullable(); // Foto Bukti Transfer
+            $table->string('status')->default('pending'); // Status donasi, defaultnya pending
             $table->timestamps(); // Tanggal dibuat dan diupdate
         });
+        
+        
+        
     }
 
     /**

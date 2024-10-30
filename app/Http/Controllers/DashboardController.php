@@ -14,7 +14,7 @@ class DashboardController extends Controller
         // Hitung total donasi uang
         $totalCashDonate = Donate::whereNotNull('amount')->sum('amount');
         // Hitung total donasi barang
-        $totalItemDonate = Donate::whereNotNull('item_name')->sum('item_qty');
+        $totalItemDonate = Donate::whereNotNull('item_qty')->sum('item_qty');
 
         $totalActiveUsers = User::where('is_active', 1)->count(); // Menghitung pengguna aktif
 

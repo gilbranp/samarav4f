@@ -13,34 +13,17 @@ Route::get('/', function () {
 Route::get('/success', function () {
     return view('success');
 });
-Route::get('/forum', function () {
-    return view('backend.forum.forum');
-});
-Route::get('/laporan', function () {
-    return view('backend.laporan.laporan');
-});
 
 // Route::get('/donate', function () {
 //     return view('donate');
 // });
 
-Route::get('/managedonate', function () {
-    return view('backend.donate.donate');
-});
 
-Route::get('/acceptdonate', function () {
-    return view('backend.donate.acceptdonate');
-});
-Route::get('/profileaccept', function () {
-    return view('backend.donate.profileaccept');
-});
 // Route::get('/donates', function () {
 //     return view('backend.donate');
 // });
 
-Route::get('/tracking', function () {
-    return view('backend.donate.tracking');
-});
+
 
 Route::middleware('guest')->group(function(){
 
@@ -65,6 +48,26 @@ Route::middleware('auth')->group(function(){
    
     });
     
+
+    Route::get('/forum', function () {
+        return view('backend.forum.forum');
+    });
+    Route::get('/laporan', function () {
+        return view('backend.laporan.laporan');
+    });
+    Route::get('/managedonate', function () {
+        return view('backend.donate.donate');
+    });
+    
+    Route::get('/acceptdonate', function () {
+        return view('backend.donate.acceptdonate');
+    });
+    Route::get('/profileaccept', function () {
+        return view('backend.donate.profileaccept');
+    });
+    Route::get('/tracking', function () {
+        return view('backend.donate.tracking');
+    });
     
     Route::get('/logout',[AuthController::class,'logout']);
 });
