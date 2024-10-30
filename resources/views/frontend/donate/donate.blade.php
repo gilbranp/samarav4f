@@ -1,5 +1,24 @@
 @extends('frontend.layout.main')
 @section('content')
+
+
+<!-- Modal untuk Login -->
+@if(!Auth::check())
+<div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg p-6 max-w-lg mx-auto text-center shadow-lg">
+        <h2 class="text-2xl font-bold mb-4">Harap Login Terlebih Dahulu</h2>
+        <p class="mb-6">Anda harus login untuk melakukan donasi. Silakan login atau buat akun jika belum memiliki.</p>
+        <a href="{{ route('login') }}" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">Login</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginModal = document.getElementById('loginModal');
+    loginModal.style.display = 'block';
+});
+</script>
+@endif
 <!-- Halaman Donasi -->
 <section id="donate" class="py-12 bg-green-600 text-white">
     <div class="container mx-auto px-6 lg:px-12 xl:px-24">
@@ -151,6 +170,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
     const donationTypeSelect = document.getElementById('donation_type');
     const donationOptionSelect = document.getElementById('donation_option');
     const amountInput = document.getElementById('amount_input');

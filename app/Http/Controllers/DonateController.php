@@ -40,7 +40,7 @@ class DonateController extends Controller
             'donation_option' => 'nullable',
             'resi_number' => 'nullable',
             'jasa_distribusi' => 'nullable',
-            'payment_option' => 'required',
+            'payment_option' => 'nullable',
             'message' => 'nullable|string',
             'transfer_receipt' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ], [
@@ -66,7 +66,7 @@ class DonateController extends Controller
         try {
             Donate::create($validateData);
             // Redirect dengan pesan sukses
-            return redirect(route('donate.index'))->with('success', 'Anda telah melakukan donasi!');
+            return redirect(route('donate.index'))->with('success', 'Anda telah melakukan donasi,status donasi sekarang pending');
         } catch (\Exception $e) {
             // Redirect dengan pesan error jika terjadi kesalahan
             return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
