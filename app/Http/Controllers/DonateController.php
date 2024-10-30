@@ -107,4 +107,14 @@ class DonateController extends Controller
     {
         //
     }
+
+    public function updateStatus($id, $status)
+    {
+        $donate = Donate::findOrFail($id);
+        $donate->status = $status; // Set status sesuai parameter (sukses atau ditolak)
+        $donate->save();
+
+        return redirect()->route('listdonate.index')->with('success', 'Status donasi berhasil diperbarui');
+    }
+
 }

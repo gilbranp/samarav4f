@@ -46,7 +46,8 @@ class ListDonatorController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // $donate = Donate::findOrFail($id);
+        // return view('');
     }
 
     /**
