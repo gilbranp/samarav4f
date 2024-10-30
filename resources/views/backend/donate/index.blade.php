@@ -5,7 +5,7 @@
 <main id="mainContent" class="main-content flex-1 p-6 overflow-y-auto transition-all duration-300">
     <!-- Header Manajemen Donasi -->
     <div class="flex flex-col lg:flex-row justify-between items-center mb-6">
-        <h1 class="text-3xl lg:text-4xl font-semibold text-green-700 mb-4 lg:mb-0 text-center lg:text-left">Daftar Pendonasi</h1>
+        <h1 class="text-3xl lg:text-4xl font-semibold text-green-700 mb-4 lg:mb-0 text-center lg:text-left">Daftar Donasi</h1>
     </div>
 
     <!-- Tabel Donasi -->

@@ -57,14 +57,14 @@
                     <div id="housePhotoInput" class="mb-3 hidden">
                         <label for="housePhoto" class="block text-green-700 font-semibold mb-1">Upload Foto Rumah</label>
                         <input type="file" id="housePhoto" name="house_photo" accept="image/*" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                        <p class="text-xs text-gray-500">Unggah foto rumah dari depan.</p>
+                        <p class="text-xs text-gray-500">Unggah foto rumah dari depan.  (max 2mb)</p>
                     </div>
 
                     <!-- Input File Foto Selfie -->
                     <div class="mb-3">
                         <label for="selfie" class="block text-green-700 font-semibold mb-1">Upload Foto Selfie</label>
                         <input type="file" id="selfie" name="selfie" accept="image/*" class="w-full p-2 border border-green-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
-                        <p class="text-xs text-gray-500">Unggah foto selfie untuk keperluan identifikasi.</p>
+                        <p class="text-xs text-gray-500">Unggah foto selfie untuk keperluan identifikasi.  (max 2mb)</p>
                     </div>
 
                     <!-- Input Lainnya -->

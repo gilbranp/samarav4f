@@ -79,10 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             <option value="alat pertanian">Alat Pertanian</option> 
                             <option value="pupuk kimia">Pupuk Kimia</option> 
                             <option value="pupuk organik">Pupuk Organik</option> 
-                            <option value="beras">Beras</option> 
+                            <option value="beras">Beras/kg</option> 
                             <option value="sagu">Sagu</option> 
-                            <option value="jagung">Jagung</option> 
-                            <option value="lainnya">Lainnya</option> 
+                            <option value="jagung">Jagung/kg</option> 
+                            {{-- <option value="lainnya">Lainnya</option>  --}}
                         </select>
                     </div>
 
