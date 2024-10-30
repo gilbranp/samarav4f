@@ -49,7 +49,9 @@ Route::middleware('auth')->group(function(){
     Route::resource('/listdonate',ListDonatorController::class);
    
     });
-    Route::get('/managedonate', [DistributionDonateController::class, 'index'])->name('donate.managedonate');
+    Route::get('/managedonate', [DistributionDonateController::class, 'index'])->name('managedonate');
+    Route::post('/managedonate/simpan', [DistributionDonateController::class, 'store'])->name('managedonate.store');
+    Route::get('/tracking/{id}', [DistributionDonateController::class, 'tracking']);
 
     Route::get('/forum', function () {
         return view('backend.forum.forum');
@@ -67,9 +69,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/profileaccept', function () {
         return view('backend.donate.profileaccept');
     });
-    Route::get('/tracking', function () {
-        return view('backend.donate.tracking');
-    });
+    // Route::get('/tracking', function () {
+    //     return view('backend.donate.tracking');
+    // });
     
     Route::get('/logout',[AuthController::class,'logout']);
 });

@@ -12,6 +12,25 @@
             </p>
         </div>
 
+        @if(session('success'))
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-3 mb-4" role="alert">
+                <p class="font-bold">Berhasil!</p>
+                <p>{{ session('success') }}</p>
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+                <strong class="font-bold">Terjadi kesalahan!</strong> 
+                <span class="block sm:inline">Silakan perbaiki kesalahan berikut:</span>
+                <ul class="list-disc pl-5 mt-2">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <!-- Statistik Donasi -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <!-- Total Donasi Uang -->
@@ -38,71 +57,74 @@
         @endif
 
        <!-- Tabel Donasi yang Sudah Disalurkan -->
-<div class="bg-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-semibold text-green-700 mb-4">Donasi yang Sudah Disalurkan</h2>
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-300">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="py-2 px-4 border">#</th>
-                    <th class="py-2 px-4 border">Jenis Donasi</th>
-                    <th class="py-2 px-4 border">Jumlah</th>
-                    <th class="py-2 px-4 border">Penerima</th>
-                    <th class="py-2 px-4 border">Tanggal</th>
-                    <th class="py-2 px-4 border">Status</th>
-                    <th class="py-2 px-4 border">Lacak</th> <!-- Kolom baru untuk tracking -->
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($donates as $no => $donation)
-                <tr class="hover:bg-gray-100">
-                    <?php 
-                        $jmlhDonasi = $donation->donation_type == "uang" 
-                            ? "RP. " . number_format($donation->amount, 0, ',', '.') 
-                            : number_format($donation->item_qty, 0, ',', '.') . " Paket";
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold text-green-700 mb-4">Donasi yang Sudah Disalurkan</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="py-2 px-4 border">#</th>
+                            <th class="py-2 px-4 border">Jenis Donasi</th>
+                            <th class="py-2 px-4 border">Jumlah</th>
+                            <th class="py-2 px-4 border">Penerima</th>
+                            <th class="py-2 px-4 border">Tanggal</th>
+                            <th class="py-2 px-4 border">Status</th>
+                            <th class="py-2 px-4 border">Lacak</th> <!-- Kolom baru untuk tracking -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($donates as $no => $donation)
+                        <tr class="hover:bg-gray-100">
+                            <?php 
+                                $jmlhDonasi = $donation->donation_type == "uang" 
+                                    ? "RP. " . number_format($donation->amount, 0, ',', '.') 
+                                    : number_format($donation->item_qty, 0, ',', '.') . " Paket";
 
-                            $date = new DateTime($donation->created_at);
-                            $formattedDate = $date->format('d F Y');
+                                    $date = new DateTime($donation->created_at);
+                                    $formattedDate = $date->format('d F Y');
 
-                    ?>
-                    <td class="py-2 px-4 border">{{ $no + 1 }}</td>
-                    <td class="py-2 px-4 border">{{ $donation->donation_type }}</td>
-                    <td class="py-2 px-4 border">{{ $jmlhDonasi }}</td>
-                    <td class="py-2 px-4 border">{{ $donation->penerima->name }}</td>
-                    <td class="py-2 px-4 border">{{ $formattedDate ?? '-'}}</td>
-                    <td class="py-2 px-4 border">
-                        <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs">{{ $donation->status }}</span>
-                    </td>
-                    <td class="py-2 px-4 border text-center">
-                        <a href="/tracking/{{$donation->id}}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-                           Lacak
-                        </a>
-                    </td> 
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="8" class="py-2 px-4 border text-center">Tidak ada donasi tersedia.</td>
-                </tr>
-                @endforelse
-                <!-- Tambahkan baris donasi lain di sini -->
-            </tbody>
-        </table>
-    </div>
-</div>
-
+                            ?>
+                            <td class="py-2 px-4 border">{{ $no + 1 }}</td>
+                            <td class="py-2 px-4 border">{{ $donation->donation_type }}</td>
+                            <td class="py-2 px-4 border">{{ $jmlhDonasi }}</td>
+                            <td class="py-2 px-4 border">{{ $donation->penerima->name }}</td>
+                            <td class="py-2 px-4 border">{{ $formattedDate ?? '-'}}</td>
+                            <td class="py-2 px-4 border">
+                                <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs">{{ $donation->status }}</span>
+                            </td>
+                            @if ($donation->donation_type != 'uang' || !is_null($donation->resi_number))
+                                <td class="py-2 px-4 border text-center">
+                                    <a href="/tracking/{{$donation->id}}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                                    Lacak
+                                    </a>
+                                </td> 
+                            @endif
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="8" class="py-2 px-4 border text-center">Tidak ada donasi tersedia.</td>
+                        </tr>
+                        @endforelse
+                        <!-- Tambahkan baris donasi lain di sini -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <!-- Modal untuk Salurkan Donasi -->
         <div id="donationModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
                 <h2 class="text-2xl font-semibold text-green-700 mb-4">Salurkan Donasi</h2>
-                <form>
+                <form action="{{ route('managedonate.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
                     <!-- Pilih Jenis Donasi -->
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold mb-2" for="jenisDonasi">
                             Jenis Donasi
                         </label>
-                        <select id="jenisDonasi" class="form-select px-3 py-2 border rounded-lg w-full" onchange="toggleFoodOptions()">
-                            <option value="">Pilih jenis donasi</option>
+                        <select id="jenisDonasi" name="donation_type" class="form-select px-3 py-2 border rounded-lg w-full" onchange="toggleFoodOptions()">
+                            <option value="pilih">Pilih jenis donasi</option>
                             <option value="uang">Uang</option>
                             <option value="alat pertanian">Alat Pertanian</option> 
                             <option value="pupuk kimia">Pupuk Kimia</option> 
@@ -114,24 +136,27 @@
                         </select>
                     </div>
 
-                    <!-- Jumlah Donasi -->
-                    <div class="mb-4">
-                        <label class="block text-gray-700 font-bold mb-2" for="jumlahDonasi">
-                            Jumlah Donasi
-                        </label>
-                        <input id="jumlahDonasi" type="number" class="form-input px-3 py-2 border rounded-lg w-full" placeholder="Masukkan jumlah donasi">
+                    <!-- Jumlah Donasi Uang -->
+                    <div id="amount_input" class="hidden">
+                        <label for="amount" class="block text-lg font-semibold mb-1">Jumlah Donasi (IDR)</label>
+                        <input type="number" id="amount" name="amount" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                     </div>
 
+                    <div id="item_qty" class="hidden">
+                        <label for="item_qty" class="block text-lg font-semibold mb-1">Jumlah</label>
+                        <input type="number" id="item_qty" name="item_qty" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+                    
                    <!-- Pilih Penerima Donasi -->
                     <div class="mb-4">
                         <label class="block text-gray-700 font-bold mb-2" for="penerimaDonasi">
                             Penerima Donasi
                         </label>
-                        <select id="penerimaDonasi" class="form-select px-3 py-2 border rounded-lg w-full" onchange="showProfileButton()">
+                        <select id="penerimaDonasi" name="penerima_id" class="form-select px-3 py-2 border rounded-lg w-full" onchange="showProfileButton()">
                             <option selected>Pilih Penerima Donasi</option>
-                            <option value="penerimaA">Penerima A</option>
-                            <option value="penerimaB">Penerima B</option>
-                            <option value="penerimaC">Penerima C</option>
+                            @foreach ($penerima as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>    
+                            @endforeach
                         </select>
                     </div>
 
@@ -140,6 +165,47 @@
                         <a id="profileButton" href="#" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
                             Lihat Profil Penerima
                         </a>
+                    </div>
+
+                    <div id="distribusi_input" class="hidden">
+                        <label for="jasa_distribusi" class="block text-lg font-semibold mb-1">Jasa Distribusi</label>
+                        <select id="jasa_distribusi" name="jasa_distribusi" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="">Pilih jasa distribusi</option>
+                            <option value="JNE">JNE</option>
+                            <option value="TIKI">TIKI</option>
+                            <option value="POS">POS</option>
+                            <option value="jnt">J&T Express</option>
+                            <option value="spx">Shopee Express</option>
+                            <option value="sicepat">SiCepat</option>
+                        </select>
+                    </div>
+
+                    <div id="resi_input" class="hidden">
+                        <label for="resi_number" class="block text-lg font-semibold mb-1">Nomor Resi</label>
+                        <input type="text" id="resi_number" name="resi_number" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                    </div>
+
+                    <!-- Pilihan Metode Pembayaran -->
+                    <div id="payment_option_input" class="hidden">
+                        <label for="payment_option" class="block text-lg font-semibold mb-1">Metode Pembayaran</label>
+                        <select id="payment_option" name="payment_option" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <option value="">Pilih metode pembayaran</option>
+                            <option value="manual">Manual</option>
+                            <option value="otomatis">Otomatis</option>
+                        </select>
+                    </div>
+
+                    <!-- Informasi Transfer Manual -->
+                    <div id="manual_transfer_info" class="hidden mt-4">
+                        <p class="text-lg font-semibold mb-1">Nomor Rekening/E-Wallet:</p>
+                        <p class="text-gray-700">Bank Mandiri - 1800013687605 (a.n. Samara) atau E-Wallet Dana - 081268477296</p>
+                        
+                        <label for="transfer_receipt" class="block text-lg font-semibold mt-3 mb-1">
+                            Unggah Bukti Transfer
+                        </label>
+                        <input type="file" id="transfer_receipt" name="transfer_receipt" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" aria-describedby="transferReceiptHelp">
+                        <small id="transferReceiptHelp" class="text-gray-500">Hanya menerima file gambar (JPEG, PNG, JPG, GIF).</small>
+                        
                     </div>
 
                     <!-- Tombol Salurkan -->
@@ -172,24 +238,50 @@
             donationModal.classList.add('hidden');
         });
     });
-</script>
-<script>
-    function showProfileButton() {
-        const penerimaDonasi = document.getElementById('penerimaDonasi').value;
-        const profileButtonContainer = document.getElementById('profileButtonContainer');
-        const profileButton = document.getElementById('profileButton');
 
-        if (penerimaDonasi !== 'Pilih Penerima Donasi') {
-            // Set the href for the profile based on the selected recipient
-            profileButton.href = `/profile/${penerimaDonasi.toLowerCase()}`;
-            
-            // Show the button container
-            profileButtonContainer.classList.remove('hidden');
+    const donationTypeSelect = document.getElementById('jenisDonasi'); // Changed to correct ID
+    const amountInput = document.getElementById('amount_input');
+    const qtyItemInput = document.getElementById('item_qty');
+    const resiInput = document.getElementById('resi_input');
+    const distribusiInput = document.getElementById('distribusi_input');
+    const paymentOptionInput = document.getElementById('payment_option'); 
+    const paymentOptionContainer = document.getElementById('payment_option_input'); 
+    const manualTransferInfo = document.getElementById('manual_transfer_info'); 
+
+    donationTypeSelect.addEventListener('change', function() {
+        console.log(this.value);
+        
+        if (this.value === 'uang') {
+            amountInput.classList.remove('hidden');
+            paymentOptionContainer.classList.remove('hidden');
+
+            qtyItemInput.classList.add('hidden');
+            distribusiInput.classList.add('hidden');
+            resiInput.classList.add('hidden');
+        } else if (this.value === 'pilih'){            
+            amountInput.classList.add('hidden');
+            paymentOptionContainer.classList.add('hidden');
+
+            qtyItemInput.classList.add('hidden');
+            distribusiInput.classList.add('hidden');
+            resiInput.classList.add('hidden');
+        }else {
+            qtyItemInput.classList.remove('hidden');
+            distribusiInput.classList.remove('hidden');
+            resiInput.classList.remove('hidden');
+
+            amountInput.classList.add('hidden');
+            paymentOptionContainer.classList.add('hidden');
+        } 
+    });
+
+    paymentOptionInput.addEventListener('change', function() {
+        if (this.value === 'manual') {
+            manualTransferInfo.classList.remove('hidden');
         } else {
-            // Hide the button if no recipient is selected
-            profileButtonContainer.classList.add('hidden');
+            manualTransferInfo.classList.add('hidden');
         }
-    }
+    });
 </script>
 
 @endsection

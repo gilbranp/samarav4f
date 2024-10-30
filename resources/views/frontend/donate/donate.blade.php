@@ -36,16 +36,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 @endif
 
                 @if ($errors->any())
-                <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
-                    <strong class="font-bold">Terjadi kesalahan!</strong> 
-                    <span class="block sm:inline">Silakan perbaiki kesalahan berikut:</span>
-                    <ul class="list-disc pl-5 mt-2">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                    <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+                        <strong class="font-bold">Terjadi kesalahan!</strong> 
+                        <span class="block sm:inline">Silakan perbaiki kesalahan berikut:</span>
+                        <ul class="list-disc pl-5 mt-2">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             
 
 
